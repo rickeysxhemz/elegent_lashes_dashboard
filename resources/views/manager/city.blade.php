@@ -1,47 +1,33 @@
 @extends ('layout')
 
-@section('title', 'Home')
+@section('title', 'Settings')
 
 @section('content')
 
 <section>
-    <div class="container">
+<div class="container">
         <div class="frame">
             <center>
-                <img src="assets/logo.png" width="50%" height="100%"style="margin-top:30px;margin-bottom:-15px;">
+                <img src="{{asset('assets/logo.png')}}" width="50%" height="100%"style="margin-top:30px;margin-bottom:-15px;">
                 <!-- <p class="text-dark" style="margin-top:30px;margin-bottom:-15px;">Lash</p> -->
-                <h1 class="text-dark" >Manager Login</h1>
+                <h1 class="text-dark" >Location</h1>
              
             </center>
             <div ng-app ng-init="checked = false">
-                <form class="form-signin" action="{{ route('login') }}" method="post" name="form"> 
-                    <!-- <select class="form-styling" name="username" style="color: black;"> 
-                              <option>Name</option>
-                    </select> -->
-                  @csrf  
-                    <select 
-                    class="manager-login" 
-                    name="phone" 
-                    style="color: black;"
-                    > 
-                    @foreach($managers as $manager)    
-                    <option value="{{$manager->phone_number}}" >{{$manager->name}} &mdash; {{$manager->phone_number}}</option>
-                   @endforeach
-                </select>
-
-                <input class="manager-login" name="password" style="color: black;" placeholder="Password" type="password" required> 
+                <form class="form-signin" action="{{route('update.location')}}" method="post" name="form"> 
+                @csrf    
+                <input class="update-location" name="location" style="color: black;" value="{{$location}}"> 
+                    
                    
-                   
-                   
-                   
-                    <div class="btn-animate"><button class="btn-signin"> Login</button> </div>
+                    <div class="btn-animate"> <button class="btn-update" >Update</button> </div>
+                    <div class="btn-animate"> <a class="btn-continue" href="{{route('user.checkin')}}">Continue</a> </div>
                 </form>
                 
             </div>
           
         </div>
     </div>
-</section>
+    </section>
     
   
     <script>
@@ -80,5 +66,3 @@
             });
     </script>
 @endsection
-    
-   

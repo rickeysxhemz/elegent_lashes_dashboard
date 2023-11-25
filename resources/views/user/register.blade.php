@@ -1,46 +1,56 @@
 @extends ('layout')
 
-@section('title', 'Home')
+@section('title', 'User Register')
 
 @section('content')
 
 <section>
-    <div class="container">
+
+<div class="container">
         <div class="frame">
             <center>
-                <img src="assets/logo.png" width="50%" height="100%"style="margin-top:30px;margin-bottom:-15px;">
+                <img src="{{asset('assets/logo.png')}}" width="50%" height="100%"style="margin-top:30px;margin-bottom:-15px;">
                 <!-- <p class="text-dark" style="margin-top:30px;margin-bottom:-15px;">Lash</p> -->
-                <h1 class="text-dark" >Manager Login</h1>
+                <h1 class="text-dark" >Register</h1>
              
             </center>
             <div ng-app ng-init="checked = false">
-                <form class="form-signin" action="{{ route('login') }}" method="post" name="form"> 
-                    <!-- <select class="form-styling" name="username" style="color: black;"> 
-                              <option>Name</option>
-                    </select> -->
-                  @csrf  
-                    <select 
-                    class="manager-login" 
-                    name="phone" 
-                    style="color: black;"
-                    > 
-                    @foreach($managers as $manager)    
-                    <option value="{{$manager->phone_number}}" >{{$manager->name}} &mdash; {{$manager->phone_number}}</option>
-                   @endforeach
-                </select>
-
-                <input class="manager-login" name="password" style="color: black;" placeholder="Password" type="password" required> 
-                   
-                   
-                   
-                   
-                    <div class="btn-animate"><button class="btn-signin"> Login</button> </div>
-                </form>
+                <form class="form-signin" action="{{route('user.register')}}" method="post" name="form"> 
+                @csrf
+                <div class="form-group">
+                    <input class="update-location form-control @error('first_name') is-invalid @enderror" 
+                        name="first_name" style="color: black;" placeholder="First Name" required>
+                    @error('first_name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <input class="update-location form-control @error('last_name') is-invalid @enderror" 
+                        name="last_name" style="color: black;" placeholder="Last Name" required>
+                    @error('last_name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>    
+                <div class="form-group">
+                    <input class="update-location form-control @error('phone') is-invalid @enderror" 
+                        name="phone" style="color: black;" placeholder="Phone # (123456789)" required>
+                    @error('phone')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+    
+    <div class="btn-animate">
+        <button class="btn-update">
+            Register
+        </button>
+    </div>
+</form>
                 
             </div>
           
         </div>
     </div>
+
 </section>
     
   
@@ -80,5 +90,3 @@
             });
     </script>
 @endsection
-    
-   
