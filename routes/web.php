@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\OwnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,20 @@ Route::middleware(['auth','role:manager'])->group(function () {
         
     });
     
+    
+    
+});
+
+////////////////////////////////  Owner Routes  /////////////////////////////////////////
+Route::prefix('owner')->group(function () {
+Route::get('login-page',[OwnerController::class,'loginPage'])->name('owner.loginPage');
+Route::post('login',[OwnerController::class,'login'])->name('owner.login');
+});
+////////////////////////////////  Owner Routes  /////////////////////////////////////////
+Route::middleware(['auth','role:owner'])->group(function () {
+
+Route::prefix('owner')->group(function () {
+Route::get('dashboard',[OwnerController::class,'dashboard'])->name('owner.dashboard');
+});
+
 });

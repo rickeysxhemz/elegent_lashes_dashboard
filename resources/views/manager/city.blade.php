@@ -16,11 +16,19 @@
             <div ng-app ng-init="checked = false">
                 <form class="form-signin" action="{{route('update.location')}}" method="post" name="form"> 
                 @csrf    
-                <input class="update-location" name="location" style="color: black;" value="{{$location}}"> 
+                <select 
+                    class="manager-login" 
+                    name="location" 
+                    style="color: black;"
+                    > 
+                    @foreach($locations as $location)    
+                    <option value="{{$location->id}}" >{{$location->location}}</option>
+                   @endforeach
+                </select>
                     
                    
                     <div class="btn-animate"> <button class="btn-update" >Update</button> </div>
-                    <div class="btn-animate"> <a class="btn-continue" href="{{route('user.checkin')}}">Continue</a> </div>
+                    <!-- <div class="btn-animate"> <a class="btn-continue" href="{{route('user.checkin')}}">Continue</a> </div> -->
                 </form>
                 
             </div>

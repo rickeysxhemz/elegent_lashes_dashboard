@@ -31,16 +31,15 @@ class UserController extends Controller
         ]);
 
         $client=Client::where('phone', $request->phone)->first();
-        $manager=User::where('id', auth()->user()->id)->first();
-
+        $manager=User::with('locations')->where('id', auth()->user()->id)->first();
         if($client){
             $check_in=new ClientCheckIn();
             $check_in->manager_id=$manager->id;
-            $check_in->location=$manager->location;
+            $check_in->location=$manager->locations->id;
             $check_in->client_id=$client->id;
             $check_in->save();
             $token=Str::random(60);
-            session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone]);
+            session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone,'client_location'=>$manager->locations->location]);
             return redirect()->route('user.waiver')->with('message', 'you are checked in successfully ');
             
         }else{

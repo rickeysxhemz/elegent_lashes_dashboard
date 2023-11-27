@@ -28,10 +28,7 @@ class RoleMiddleware
             : explode('|', $role);
 
         if (!$authGuard->user()->hasAnyRole($roles)) {
-            return Response::json([
-                'status_code' => 403,
-                'message' => 'You have no access or roles are missing!',
-            ]);
+            throw UnauthorizedException::forRoles($roles);
         }
 
         return $next($request);

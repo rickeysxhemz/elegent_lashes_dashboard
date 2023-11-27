@@ -29,17 +29,17 @@ class Repository{
         $client->last_name = $request->last_name;
         $client->save();
         
-        $manager=User::where('id', auth()->user()->id)->first();
+        $manager=User::with('locations')->where('id', auth()->user()->id)->first();
         
         $check_in=new ClientCheckIn();
         $check_in->manager_id=$manager->id;
-        $check_in->location=$manager->location;
+        $check_in->location=$manager->locations->id;
         $check_in->client_id=$client->id;
         $check_in->save();
         
         DB::commit();
         
-        session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone]);
+        session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone,'client_location'=>$manager->locations->location]);
         
         return true;
 
@@ -62,7 +62,8 @@ class Repository{
          // Retrieve client information from the session
             $clientName = session('client_name');
             $clientPhone = session('client_phone');
-
+            $clientLocation = User::with('locations')->where('id', auth()->user()->id)->first();
+            $location=$clientLocation->locations->location;
 
         // Generate PDF with terms and conditions
         $pdf = new TCPDF();
@@ -77,6 +78,7 @@ class Repository{
         $content = "
         Client Name: $clientName
         Client Phone: $clientPhone
+        Client Location: $location
         Procedure to be Performed: Eyelash Extension Application
         
         As a client of Elegant Lashes by Katie LLC, I acknowledge and fully understand the risks involved in receiving eyelash extension procedures. I hereby agree to the following terms and conditions:
@@ -123,11 +125,13 @@ class Repository{
         $pdfFileName = time() . '_signed_document.pdf';
         $pdfPath = storage_path($this->privateStoragePath . $pdfFileName);
         $pdf->Output($pdfPath, 'F');
-    
+        
+        $pdf_path = 'storage/private/signaturedPdf/';
         // Save the PDF path to the database
         $signedDocument = new ClientWaiver();
         $signedDocument->client_id = session('client_id');
-        $signedDocument->waiver_storage_path = $this->privateStoragePath;
+        $signedDocument->location_id=$clientLocation->locations->id;
+        $signedDocument->waiver_storage_path = $pdf_path . $pdfFileName;
         $signedDocument->save();
 
         // Output PDF to the browser or save it to a file
