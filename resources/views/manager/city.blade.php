@@ -22,7 +22,7 @@
                     style="color: black;"
                     > 
                     @foreach($locations as $location)    
-                    <option value="{{$location->id}}" >{{$location->location}}</option>
+                    <option value="{{$location->id}}" >{{$location->name}}</option>
                    @endforeach
                 </select>
                     

@@ -11,19 +11,17 @@
     <div class="lg-inner-column">
       <div class="left-column relative z-[1]">
         <div class="max-w-[520px] pt-20 ltr:pl-20 rtl:pr-20">
-          <a href="index.html">
-            <img src="{{asset('dashboard/assets/images/logo/logo.svg')}}" alt="" class="mb-10 dark_logo">
-            <img src="{{asset('dashboard/assets/images/logo/logo-white.svg')}}" alt="" class="mb-10 white_logo">
-          </a>
+         
           <h4>
-            Unlock your Project
+            Elegent Lashes
             <span class="text-slate-800 dark:text-slate-400 font-bold">
-                            performance
+                            By Katie
                         </span>
           </h4>
         </div>
         <div class="absolute left-0 2xl:bottom-[-160px] bottom-[-130px] h-full w-full z-[-1]">
-          <img src="{{asset('dashboard/assets/images/auth/ils1.svg')}}" alt="" class=" h-full w-full object-contain">
+          <!-- <img src="{{asset('dashboard/assets/images/auth/ils1.svg')}}" alt="" class=" h-full w-full object-contain"> -->
+          <h1 style="margin-top:50px;margin-left:80px">Owner Login</h1>
         </div>
       </div>
       <div class="right-column  relative">
@@ -38,7 +36,7 @@
             <div class="text-center 2xl:mb-10 mb-4">
               <h4 class="font-medium">Sign in</h4>
               <div class="text-slate-500 text-base">
-                Sign in to your account to start using Dashcode
+               <b> Owner Login</b>
               </div>
             </div>
             <!-- BEGIN: Login Form -->
@@ -72,7 +70,7 @@
             
           </div>
           <div class="auth-footer text-center">
-            Copyright 2021, Dashcode All Rights Reserved.
+            Copyright 2023, Elegent Lashes by Katie All Rights Reserved.
           </div>
         </div>
       </div>

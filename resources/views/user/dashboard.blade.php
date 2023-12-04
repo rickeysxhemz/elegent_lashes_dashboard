@@ -36,15 +36,18 @@
                         <a class="btn btn-danger" href="{{route('user.logout')}}">Logout</a>
                     </div>
 
-                    <div class="countdown-timer" style="display: none;">
-                        <div class="anime-wrapper">
-                            <p id="custom-countdown">5</p>
-                        </div>
-                    </div>
+                    <div class="countdown-timer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(255, 255, 255, 0.9); z-index: 2;">
+            <div class="anime-wrapper">
+                <p id="custom-countdown">5</p>
+            </div>
+            <div class="cancel-button" style="text-align: center; margin-top: 10px;">
+                <button class="btn btn-warning" onclick="cancelLogout()">Cancel Logout</button>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
-
+        
         <style>
             /* Custom CSS for styling */
             .custom-dashboard-frame {
@@ -122,21 +125,24 @@
             justify-content: center; 
                 }
 
-            .check-in-item {
+                .check-in-item {
+                flex: 0 0 calc(100% - 20px); /* Adjust the width and margin based on your design */
                 background-color: #f0f0f0;
                 padding: 8px;
                 border-radius: 5px;
                 margin: 5px;
+                }
+                .cancel-button {
+                text-align: center;
             }
-
         </style>
 
-        <script src="https://cdn.jsdelivr.net/npm/animejs@3.7.1"></script>
         <script>
             // JavaScript with anime.js
             document.addEventListener('DOMContentLoaded', function () {
                 var countdownElement = document.getElementById('custom-countdown');
                 var seconds = 6;
+                var countdownTimeout;
 
                 function updateCountdown() {
                     countdownElement.textContent = seconds;
@@ -145,17 +151,31 @@
                         window.location = "{{ route('user.logout') }}";
                     } else {
                         seconds--;
-                        setTimeout(updateCountdown, 1000);
+                        countdownTimeout = setTimeout(updateCountdown, 1000);
                     }
                 }
 
-                // Display countdown after 5 seconds
-                setTimeout(function () {
-                    document.querySelector('.checkin-details').style.display = 'none';
+                function startCountdown() {
+                    // document.querySelector('.checkin-details').style.display = 'none';
                     document.querySelector('.logout-button').style.display = 'none';
                     document.querySelector('.countdown-timer').style.display = 'flex';
                     updateCountdown();
-                }, 10000);
+                }
+
+                // Display countdown after 5 seconds
+                setTimeout(startCountdown, 10000);
+
+                // Function to cancel logout
+                window.cancelLogout = function () {
+                    clearTimeout(countdownTimeout);
+                    document.querySelector('.checkin-details').style.display = 'block';
+                    document.querySelector('.logout-button').style.display = 'block';
+                    document.querySelector('.countdown-timer').style.display = 'none';
+                    seconds = 6; // Reset the countdown timer to 5 seconds
+
+                    // Restart countdown after cancellation
+                    setTimeout(startCountdown, 10000);
+                };
             });
         </script>
 

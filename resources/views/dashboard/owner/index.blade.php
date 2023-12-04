@@ -1,79 +1,11 @@
-@extends('dashboard.includes.header')
+@include('dashboard.includes.header')
 <body class=" font-inter dashcode-app" id="body_class">
   <!-- [if IE]> <p class="browserupgrade"> You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security. </p> <![endif] -->
   <main class="app-wrapper">
     <!-- BEGIN: Sidebar -->
+   @include('dashboard.includes.navigation')
     <!-- BEGIN: Sidebar -->
-    <div class="sidebar-wrapper group">
-      <div id="bodyOverlay" class="w-screen h-screen fixed top-0 bg-slate-900 bg-opacity-50 backdrop-blur-sm z-10 hidden"></div>
-      <div class="logo-segment">
-        <a class="flex items-center" href="index.html">
-          <img src="{{asset('dashboard/assets/images/logo/logo-c.svg')}}" class="black_logo" alt="logo">
-          <img src="{{asset('dashboard/assets/images/logo/logo-c-white.svg')}}" class="white_logo" alt="logo">
-          <span class="ltr:ml-3 rtl:mr-3 text-xl font-Inter font-bold text-slate-900 dark:text-white">Elegent Lashes</span>
-        </a>
-        <!-- Sidebar Type Button -->
-        <div id="sidebar_type" class="cursor-pointer text-slate-900 dark:text-white text-lg">
-          <span class="sidebarDotIcon extend-icon cursor-pointer text-slate-900 dark:text-white text-2xl">
-        <div class="h-4 w-4 border-[1.5px] border-slate-900 dark:border-slate-700 rounded-full transition-all duration-150 ring-2 ring-inset ring-offset-4 ring-black-900 dark:ring-slate-400 bg-slate-900 dark:bg-slate-400 dark:ring-offset-slate-700"></div>
-      </span>
-          <span class="sidebarDotIcon collapsed-icon cursor-pointer text-slate-900 dark:text-white text-2xl">
-        <div class="h-4 w-4 border-[1.5px] border-slate-900 dark:border-slate-700 rounded-full transition-all duration-150"></div>
-      </span>
-        </div>
-        <button class="sidebarCloseIcon text-2xl">
-          <iconify-icon class="text-slate-900 dark:text-slate-200" icon="clarity:window-close-line"></iconify-icon>
-        </button>
-      </div>
-      <div id="nav_shadow" class="nav_shadow h-[60px] absolute top-[80px] nav-shadow z-[1] w-full transition-all duration-200 pointer-events-none
-      opacity-0"></div>
-      <div class="sidebar-menus bg-white dark:bg-slate-800 py-2 px-4 h-[calc(100%-80px)] overflow-y-auto z-50" id="sidebar_menus">
-        <ul class="sidebar-menu">
-          <li class="sidebar-menu-title">MENU</li>
-          <li class="">
-            <a href="#" class="navItem">
-              <span class="flex items-center">
-            <iconify-icon class=" nav-icon" icon="heroicons-outline:home"></iconify-icon>
-            <span>Dashboard</span>
-              </span>
-             
-           
-           
-            </a>
-            
-          </li>
-          <!-- Apps Area -->
-          <li class="sidebar-menu-title">USERS</li>
-          <li>
-            <a href="chat.html" class="navItem">
-              <span class="flex items-center">
-            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
-            <span>Manage Manager</span>
-              </span>
-            </a>
-          </li>
-          <li>
-            <a href="chat.html" class="navItem">
-              <span class="flex items-center">
-            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
-            <span>Manage technician</span>
-              </span>
-            </a>
-          </li>
-          
-          
-          
-         
-         
-          
-          
-         
-         
-        </ul>
-      
-        
-      </div>
-    </div>
+  
   
 
     <!-- End: Settings -->
@@ -1581,50 +1513,15 @@
                   <div class="dropdown-menu z-10 hidden bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md
       overflow-hidden">
                     <ul class="py-1 text-sm text-slate-800 dark:text-slate-200">
-                      <li>
-                        <a href="index.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-            dark:text-white font-normal">
-                          <iconify-icon icon="heroicons-outline:user" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                          <span class="font-Inter">Dashboard</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="chat.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-            dark:text-white font-normal">
-                          <iconify-icon icon="heroicons-outline:chat" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                          <span class="font-Inter">Chat</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="email.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-            dark:text-white font-normal">
-                          <iconify-icon icon="heroicons-outline:mail" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                          <span class="font-Inter">Email</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="todo.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-            dark:text-white font-normal">
-                          <iconify-icon icon="heroicons-outline:clipboard-check" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                          <span class="font-Inter">Todo</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="settings.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-            dark:text-white font-normal">
-                          <iconify-icon icon="heroicons-outline:cog" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                          <span class="font-Inter">Settings</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="pricing.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+                    <li>
+                        <a href="{{route('owner.changePasswordPage')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
             dark:text-white font-normal">
                           <iconify-icon icon="heroicons-outline:credit-card" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                          <span class="font-Inter">Price</span>
+                          <span class="font-Inter">Change Password</span>
                         </a>
                       </li>
                       <li>
-                        <a href="signin-one.html" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+                        <a href="{{route('owner.logout')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
             dark:text-white font-normal">
                           <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
                           <span class="font-Inter">Logout</span>
@@ -1756,14 +1653,14 @@
                           </div>
                         </div>
                       </div>
-                      <!-- <div class="card">
+                      <div class="card">
                         <div class="card-header">
                           <h4 class="card-title">Deal distribution by stage</h4>
                         </div>
                         <div class="card-body p-6">
                           <div id="areaChart" height="310"></div>
                         </div>
-                      </div>-->
+                      </div>
                     </div> 
                     <div class="xl:col-span-4 col-span-12">
                       <div class="card">
@@ -3079,6 +2976,6 @@
     </div>
   </main>
   <!-- scripts -->
-@extends('dashboard.includes.footer')
+@include('dashboard.includes.footer')
 </body>
 </html>

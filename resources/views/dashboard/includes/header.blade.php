@@ -17,5 +17,41 @@
   <link rel="stylesheet" href="{{asset('dashboard/assets/css/app.css')}}">
   <!-- START : Theme Config js-->
   <!-- END : Theme Config js-->
+  <style>
+    #confirmationModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.modal-content {
+    text-align: center;
+}
+
+#confirmationModal p {
+    margin-bottom: 20px;
+}
+
+#confirmationModal button {
+    background-color: #3490dc;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+#confirmationModal button:hover {
+    background-color: #2779bd;
+}
+</style>
   
 </head>

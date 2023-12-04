@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Client;
 use App\Models\ClientCheckIn;
 use App\Models\ClientWaiver;
+use App\Models\LocationUser;
 use App\Repository\Repository;
 use Illuminate\Support\Str;
 use App\Http\Requests\AuthRequests\UserRegisterRequest;
@@ -30,19 +31,21 @@ class UserController extends Controller
             'phone' => 'required|numeric|digits:10|min:10',
         ]);
 
-        $client=Client::where('phone', $request->phone)->first();
-        $manager=User::with('locations')->where('id', auth()->user()->id)->first();
+        $client = Client::where('phone', $request->phone)->first();
+        $manager = LocationUser::with('location','manager')->where('user_id', auth()->user()->id)->first();
+        
         if($client){
             $check_in=new ClientCheckIn();
-            $check_in->manager_id=$manager->id;
-            $check_in->location=$manager->locations->id;
+            $check_in->manager_id=$manager->manager->id;
+            $check_in->location_id=$manager->location->id;
             $check_in->client_id=$client->id;
             $check_in->save();
             $token=Str::random(60);
-            session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone,'client_location'=>$manager->locations->location]);
+            session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone,'client_location'=>$manager->location->location]);
             return redirect()->route('user.waiver')->with('message', 'you are checked in successfully ');
             
         }else{
+            session(['phone' => $request->phone]);
             return redirect()->route('user.registerPage')->with('error', 'you are not registered please register first');
             }
         
@@ -68,8 +71,8 @@ class UserController extends Controller
         }
 
         $check_ins = ClientCheckIn::where('client_id', session('client_id'))
-        ->where('manager_id', auth()->user()->id)
         ->orderBy('created_at', 'desc')
+        ->take(10) // Limit the result to 10 records
         ->pluck('created_at')
         ->map(function ($timestamp) {
             return $timestamp->format('F j, Y \a\t g:i A');
@@ -87,7 +90,9 @@ class UserController extends Controller
             return redirect()->route('user.checkin')->with('error', 'Your token expired, please check in again');
         }
       
-        $waiver=ClientWaiver::where('client_id', session('client_id'))->first();
+        $waiver = ClientWaiver::where('client_id', session('client_id'))
+        ->whereDate('created_at', now()->toDateString())
+        ->first();
         
         if($waiver){
 
@@ -105,6 +110,7 @@ class UserController extends Controller
         }
         $waiver_upload = $this->repository->generateSignedPDF($request);
         if(!$waiver_upload)
+        dd($request->all());
             return redirect()->back()->with('error', 'Something went wrong');
         return redirect()->route('user.dashboard')->with('message', 'Waiver uploaded successfully');
     }

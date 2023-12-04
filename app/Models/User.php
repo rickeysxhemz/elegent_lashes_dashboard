@@ -20,7 +20,11 @@ class User extends Authenticatable
      */
     public function locations()
     {
-        return $this->hasOne(LocationUser::class);
+        return $this->hasMany(LocationUser::class);
+    }
+    public function technician_locations()
+    {
+        return $this->hasMany(LocationTechnician::class)->with('location');
     }
 
     protected $fillable = [

@@ -33,7 +33,7 @@
                 </div>    
                 <div class="form-group">
                     <input class="update-location form-control @error('phone') is-invalid @enderror" 
-                        name="phone" style="color: black;" placeholder="Phone # (123456789)" required>
+                        name="phone" style="color: black;" placeholder="Phone # (123456789)" value="{{session('phone')}}">
                     @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

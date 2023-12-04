@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\ClientCheckIn;
+use App\Models\LocationUser;
 use App\Helper\Helper;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class Repository{
     public function createClient($request)
     {
         try{
-        
+        session()->forget('phone');
         $token=Str::random(60);
         
         DB::beginTransaction();
@@ -29,17 +30,17 @@ class Repository{
         $client->last_name = $request->last_name;
         $client->save();
         
-        $manager=User::with('locations')->where('id', auth()->user()->id)->first();
+        $manager = LocationUser::with('location','manager')->where('user_id', auth()->user()->id)->first();
         
         $check_in=new ClientCheckIn();
-        $check_in->manager_id=$manager->id;
-        $check_in->location=$manager->locations->id;
+        $check_in->manager_id=$manager->manager->id;
+        $check_in->location_id=$manager->location->id;
         $check_in->client_id=$client->id;
         $check_in->save();
         
         DB::commit();
         
-        session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone,'client_location'=>$manager->locations->location]);
+        session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone,'client_location'=>$manager->location->location]);
         
         return true;
 
@@ -62,8 +63,8 @@ class Repository{
          // Retrieve client information from the session
             $clientName = session('client_name');
             $clientPhone = session('client_phone');
-            $clientLocation = User::with('locations')->where('id', auth()->user()->id)->first();
-            $location=$clientLocation->locations->location;
+            $clientLocation = LocationUser::with('location')->where('user_id', auth()->user()->id)->first();
+            $location=$clientLocation->location->name;
 
         // Generate PDF with terms and conditions
         $pdf = new TCPDF();
@@ -130,7 +131,7 @@ class Repository{
         // Save the PDF path to the database
         $signedDocument = new ClientWaiver();
         $signedDocument->client_id = session('client_id');
-        $signedDocument->location_id=$clientLocation->locations->id;
+        $signedDocument->location_id=$clientLocation->location->id;
         $signedDocument->waiver_storage_path = $pdf_path . $pdfFileName;
         $signedDocument->save();
 
