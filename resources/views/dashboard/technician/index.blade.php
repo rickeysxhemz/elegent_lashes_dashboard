@@ -1591,11 +1591,11 @@
                                   <iconify-icon icon=heroicons-outline:menu-alt-1></iconify-icon>
                                 </div>
                                 <span class="block text-sm text-slate-600 font-medium dark:text-white mb-1">
-            Total Task
-        </span>
+                                    Total Task
+                                </span>
                                 <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium">
-            64
-        </span>
+                                    64
+                                </span>
                               </div>
 
                               <div class=" bg-warning-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-50 text-center">
@@ -1810,6 +1810,7 @@
                   </div>
                 </div> -->
                 <!--  -->
+                {{$technician_assigned_tasks->links()}}
               </div>
             </div>
           </div>
@@ -1817,23 +1818,7 @@
       </div>
 
       <!-- BEGIN: Footer For Desktop and tab -->
-      <footer class="md:block hidden" id="footer">
-        <div class="site-footer px-6 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-300 py-4 ltr:ml-[248px] rtl:mr-[248px]">
-          <div class="grid md:grid-cols-2 grid-cols-1 md:gap-5">
-            <div class="text-center ltr:md:text-start rtl:md:text-right text-sm">
-              COPYRIGHT ©
-              <span id="thisYear"></span>
-              DashCode, All rights Reserved
-            </div>
-            <div class="ltr:md:text-right rtl:md:text-end text-center text-sm">
-              Hand-crafted &amp; Made by
-              <a href="https://codeshaper.net" target="_blank" class="text-primary-500 font-semibold">
-                Codeshaper
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+     @include('dashboard.includes.copyright')
       <!-- END: Footer For Desktop and tab -->
 
       <div class="bg-white bg-no-repeat custom-dropshadow footer-bg dark:bg-slate-700 flex justify-around items-center
@@ -1876,8 +1861,35 @@
         </a>
       </div>
     </div>
+   
   </main>
   <!-- scripts -->
 @include('dashboard.includes.footer')
+
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
+<script>
+
+// Enable pusher logging - don't include this in production
+
+
+var pusher = new Pusher('2080c6dc08df5ed47ee1', {
+  cluster: 'mt1'
+});
+
+var audio = new Audio("{{asset('dashboard/assets/notification/notify.mp3')}}");
+
+var channel = pusher.subscribe('notify-channel');
+channel.bind('notify-event', function(data) {
+  audio.currentTime = 0;
+
+  // Play the audio
+  audio.play();
+
+            // Display notification using Toastr
+  toastr.success(data.message, 'Notification');
+});
+</script>
 </body>
+
 </html>

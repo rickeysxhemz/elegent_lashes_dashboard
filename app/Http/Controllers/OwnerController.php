@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repository\OwnerService;
 use App\Http\Requests\OwnerRequests\OwnerLoginRequest;
 use App\Http\Requests\OwnerRequests\CreateManagerRequest;
+use App\Http\Requests\OwnerRequests\UpdateManagerRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -98,7 +99,18 @@ class OwnerController extends Controller
     
     public function updateManager(Request $request, $id)
     {
+        $request->validate([
+            // 'full_name' => 'required|string',
+            'email' => 'required|unique:users,email,' . $id,
+            // 'phone' => 'required|numeric',
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required|min:8',
+            // 'location' => 'required|string',
+
+        ]);
+        
         $manager = $this->ownerService->updateManager($request, $id);
+        
         if ($manager) {
             return redirect()->route('owner.manageManager')->with('message', 'Manager updated successfully');
         } else {
@@ -164,6 +176,15 @@ class OwnerController extends Controller
 
     public function updateTechnician(Request $request, $id)
     {
+        $request->validate([
+            // 'full_name' => 'required|string',
+            'email' => 'required|unique:users,email,' . $id,
+            // 'phone' => 'required|numeric',
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required|min:8',
+            // 'location' => 'required|string',
+
+        ]);
         $technician = $this->ownerService->updateTechnician($request, $id);
         if ($technician) {
             return redirect()->route('owner.manageTechnician')->with('message', 'Technician updated successfully');

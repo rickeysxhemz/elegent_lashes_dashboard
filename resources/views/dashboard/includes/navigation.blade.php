@@ -99,6 +99,14 @@
               </span>
             </a>
           </li>
+          <li>
+            <a href="" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
+            <span>Technician Payroll</span>
+              </span>
+            </a>
+          </li>
           <li class="sidebar-menu-title">Waivers</li>
           <li>
             <a href="{{route('owner.listWaivers')}}" class="navItem">
@@ -123,7 +131,7 @@
               </span>     
             </a>
           </li>
-          <li class="sidebar-menu-title">Check Ins</li>
+          <!-- <li class="sidebar-menu-title">Check Ins</li>
           <li>
             <a href="{{route('owner.listCheckins')}}" class="navItem">
               <span class="flex items-center">
@@ -131,7 +139,7 @@
             <span>Complete Task</span>
               </span>
             </a>
-          </li>
+          </li> -->
       @endif
       @if(auth()->user()->hasRole('technician'))
       <ul class="sidebar-menu">
@@ -144,7 +152,7 @@
               </span>     
             </a>
           </li>
-          <li class="sidebar-menu-title">Payments</li>
+          <!-- <li class="sidebar-menu-title">Payments</li>
           <li>
             <a href="{{route('owner.listCheckins')}}" class="navItem">
               <span class="flex items-center">
@@ -152,7 +160,7 @@
             <span>Add Payment</span>
               </span>
             </a>
-          </li>
+          </li> -->
 
       @endif
 

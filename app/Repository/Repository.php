@@ -127,7 +127,7 @@ class Repository{
         $pdfPath = storage_path($this->privateStoragePath . $pdfFileName);
         $pdf->Output($pdfPath, 'F');
         
-        $pdf_path = 'storage/private/signaturedPdf/';
+        $pdf_path = 'private/signaturedPdf/';
         // Save the PDF path to the database
         $signedDocument = new ClientWaiver();
         $signedDocument->client_id = session('client_id');

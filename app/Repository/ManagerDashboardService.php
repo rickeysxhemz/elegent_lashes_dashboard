@@ -11,7 +11,7 @@ use App\Models\ClientCheckIn;
 use App\Models\ClientCheckInTechnician;
 use App\Models\Service;
 use Illuminate\Support\Facades\DB;
-
+use App\Jobs\SendNotification;
 
 class ManagerDashboardService
 {
@@ -66,7 +66,7 @@ class ManagerDashboardService
   public function logout()
   {
         Auth::logout();
-        return redirect()->route('manager.loginPage');
+        return redirect()->route('dashboard')->with('message','You are logged out');
   }
   public function assignCheckInPage($id)
   {
@@ -94,6 +94,7 @@ class ManagerDashboardService
         $client_technician->save();
         DB::commit();
         session()->forget('assign_check_in_id');
+        SendNotification::dispatch('You have been assigned a check in', $request->technician_id);
         return redirect()->route('manager.dashboard')->with('message','Check In Assigned Successfully');
         }catch(Exception $e){
             DB::rollback();

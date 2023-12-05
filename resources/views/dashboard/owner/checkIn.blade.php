@@ -471,12 +471,13 @@
                                         <div class="relative">
                                           
                                            
-                                      
+                                     <a href="{{route('owner.updateClientPage',$client->id)}}">                                       
                                     <button class="btn inline-flex justify-center btn-secondary btn-sm">
                                     <span class="flex items-center">
                                         <span>Edit</span>
                                     </span>
                                   </button>
+                                    </a>
                                   <a href="{{route('owner.listCheckinsByUser',$client->id)}}">
                                   <button class="btn inline-flex justify-center btn-secondary btn-sm">
                                     <span class="flex items-center">

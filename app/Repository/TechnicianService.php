@@ -18,7 +18,7 @@ class TechnicianService{
         ->where('technician_id',Auth::user()->id)
         // ->where('status','pending')
         ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END, status")
-        ->get();
+        ->paginate(10);
         // dd($technician_assigned_tasks);
         return view('dashboard.technician.index',compact('technician_assigned_tasks'));
     }
@@ -49,7 +49,7 @@ class TechnicianService{
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('technician.loginPage')->with('message', 'You are logged out');
+        return redirect()->route('dashboard')->with('message', 'You are logged out');
     }
 
     public function addPayments($id)

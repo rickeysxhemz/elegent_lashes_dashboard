@@ -24,5 +24,24 @@ class OwnerCheckInController extends Controller
     {
         return $this->ownerCheckInService->listWaivers();
     }
+    public function downloadWaiver($id)
+    {
+        return $this->ownerCheckInService->downloadWaiver($id);
+    }
+
+    public function updateClientPage($id)
+    {
+        return $this->ownerCheckInService->updateClientPage($id);
+    }
+
+    public function updateClient(Request $request,$id)
+    {
+        $update_client = $this->ownerCheckInService->updateClient($request,$id);
+        if($update_client){
+            return redirect()->route('owner.listCheckins')->with('message','Client Updated Successfully');
+        }else{
+            return redirect()->route('owner.listCheckins')->with('error','Client Not Updated');
+        }
+    }
 
 }

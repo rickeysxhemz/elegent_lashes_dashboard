@@ -61,71 +61,73 @@ Route::get('/dasboard', function () {
 })->name('dashboard');
 ////////////////////////////////  Owner Routes  /////////////////////////////////////////
 Route::prefix('owner')->group(function () {
-Route::get('login-page',[OwnerController::class,'loginPage'])->name('owner.loginPage');
-Route::post('login',[OwnerController::class,'login'])->name('owner.login');
+    Route::get('login-page',[OwnerController::class,'loginPage'])->name('owner.loginPage');
+    Route::post('login',[OwnerController::class,'login'])->name('owner.login');
 });
 ////////////////////////////////  Owner Routes  /////////////////////////////////////////
 Route::middleware(['auth','role:owner'])->group(function () {
 
-Route::prefix('owner')->group(function () {
+    Route::prefix('owner')->group(function () {
 
-    //////////////////////////////////Dashboard Routes/////////////////////////////////////////
-    Route::get('dashboard',[OwnerController::class,'dashboard'])->name('owner.dashboard');
-    Route::get('logout',[OwnerController::class,'logout'])->name('owner.logout');
-    Route::get('change-password-page',[OwnerController::class,'changePasswordPage'])->name('owner.changePasswordPage');
-    Route::patch('change-password',[OwnerController::class,'changePassword'])->name('owner.changePassword');
-    //////////////////////////////////Manager Management Routes by owner/////////////////////////////////////////
+        //////////////////////////////////Dashboard Routes/////////////////////////////////////////
+        Route::get('dashboard',[OwnerController::class,'dashboard'])->name('owner.dashboard');
+        Route::get('logout',[OwnerController::class,'logout'])->name('owner.logout');
+        Route::get('change-password-page',[OwnerController::class,'changePasswordPage'])->name('owner.changePasswordPage');
+        Route::patch('change-password',[OwnerController::class,'changePassword'])->name('owner.changePassword');
+        //////////////////////////////////Manager Management Routes by owner/////////////////////////////////////////
 
-    Route::prefix('manage')->group(function () {
-        Route::get('manager',[OwnerController::class,'manageManager'])->name('owner.manageManager');
-        Route::get('technician',[OwnerController::class,'manageTechnician'])->name('owner.manageTechnician');
-        Route::get('location',[OwnerController::class,'manageLocation'])->name('owner.manageLocation');
-        Route::get('create-manager-page',[OwnerController::class,'createManagerPage'])->name('owner.createManagerPage');
-        Route::post('create-manager',[OwnerController::class,'createManager'])->name('owner.createManager');
-        Route::get('edit-manager-page/{id}',[OwnerController::class,'editManagerPage'])->name('owner.editManagerPage');
-        Route::put('update-manager/{id}',[OwnerController::class,'updateManager'])->name('owner.updateManager');
-        Route::get('delete-manager/{id}',[OwnerController::class,'deleteManager'])->name('owner.deleteManager');
+        Route::prefix('manage')->group(function () {
+            Route::get('manager',[OwnerController::class,'manageManager'])->name('owner.manageManager');
+            Route::get('technician',[OwnerController::class,'manageTechnician'])->name('owner.manageTechnician');
+            Route::get('location',[OwnerController::class,'manageLocation'])->name('owner.manageLocation');
+            Route::get('create-manager-page',[OwnerController::class,'createManagerPage'])->name('owner.createManagerPage');
+            Route::post('create-manager',[OwnerController::class,'createManager'])->name('owner.createManager');
+            Route::get('edit-manager-page/{id}',[OwnerController::class,'editManagerPage'])->name('owner.editManagerPage');
+            Route::put('update-manager/{id}',[OwnerController::class,'updateManager'])->name('owner.updateManager');
+            Route::get('delete-manager/{id}',[OwnerController::class,'deleteManager'])->name('owner.deleteManager');
 
-        ////////////////////////////////Location Management Routes by owner/////////////////////////////////////////
+            ////////////////////////////////Location Management Routes by owner/////////////////////////////////////////
 
-        Route::get('create-location-page',[OwnerController::class,'createLocationPage'])->name('owner.createLocationPage');
-        Route::post('create-location',[OwnerController::class,'createLocation'])->name('owner.createLocation');
-        Route::get('delete-location/{id}',[OwnerController::class,'deleteLocation'])->name('owner.deleteLocation');
+            Route::get('create-location-page',[OwnerController::class,'createLocationPage'])->name('owner.createLocationPage');
+            Route::post('create-location',[OwnerController::class,'createLocation'])->name('owner.createLocation');
+            Route::get('delete-location/{id}',[OwnerController::class,'deleteLocation'])->name('owner.deleteLocation');
 
-        ////////////////////////////////Technician Management Routes by owner/////////////////////////////////////////
+            ////////////////////////////////Technician Management Routes by owner/////////////////////////////////////////
 
-        Route::get('create-technician-page',[OwnerController::class,'createTechnicianPage'])->name('owner.createTechnicianPage');
-        Route::post('create-technician',[OwnerController::class,'createTechnician'])->name('owner.createTechnician');
-        Route::get('edit-technician-page/{id}',[OwnerController::class,'editTechnicianPage'])->name('owner.editTechnicianPage');
-        Route::put('update-technician/{id}',[OwnerController::class,'updateTechnician'])->name('owner.updateTechnician');
-        Route::get('delete-technician/{id}',[OwnerController::class,'deleteTechnician'])->name('owner.deleteTechnician');
+            Route::get('create-technician-page',[OwnerController::class,'createTechnicianPage'])->name('owner.createTechnicianPage');
+            Route::post('create-technician',[OwnerController::class,'createTechnician'])->name('owner.createTechnician');
+            Route::get('edit-technician-page/{id}',[OwnerController::class,'editTechnicianPage'])->name('owner.editTechnicianPage');
+            Route::put('update-technician/{id}',[OwnerController::class,'updateTechnician'])->name('owner.updateTechnician');
+            Route::get('delete-technician/{id}',[OwnerController::class,'deleteTechnician'])->name('owner.deleteTechnician');
+        });
+
+            /////////////////////////////Clients-CheckIns Management/////////////////////////////////////////
+
+        Route::prefix('clients')->group(function () {
+            Route::get('list-checkins',[OwnerCheckInController::class,'listCheckins'])->name('owner.listCheckins');
+            Route::get('list-checkins/{id}',[OwnerCheckInController::class,'listCheckinsByUser'])->name('owner.listCheckinsByUser');
+            Route::get('update-page/{id}',[OwnerCheckInController::class,'updateClientPage'])->name('owner.updateClientPage');
+            Route::put('update/{id}',[OwnerCheckInController::class,'updateClient'])->name('owner.updateClient');
+        });
+        
+        /////////////////////////////Clients-Waivers Management/////////////////////////////////////////
+        
+        Route::prefix('waiver')->group(function(){
+            Route::get('list-waivers',[OwnerCheckInController::class,'listWaivers'])->name('owner.listWaivers');
+            Route::get('/download/{id}',[OwnerCheckInController::class,'downloadWaiver'])->name('owner.downloadWaiver');
+        });
+        
+        /////////////////////////////Clients-Payments Management/////////////////////////////////////////
+        
+        Route::prefix('payment')->group(function(){
+            Route::get('list',[OwnerPaymentController::class,'paymentPage'])->name('owner.listPayments');
+            Route::get('revenue-calculator-page',[OwnerPaymentController::class,'revenueCalculatorPage'])->name('owner.revenueCalculatorPage');
+            Route::post('revenue-calculate',[OwnerPaymentController::class,'revenueCalculate'])->name('owner.revenueCalculate');
+        });
+
+        });
+
     });
-
-        /////////////////////////////Clients-CheckIns Management/////////////////////////////////////////
-
-    Route::prefix('clients')->group(function () {
-        Route::get('list-checkins',[OwnerCheckInController::class,'listCheckins'])->name('owner.listCheckins');
-        Route::get('list-checkins/{id}',[OwnerCheckInController::class,'listCheckinsByUser'])->name('owner.listCheckinsByUser');
-    });
-    
-    /////////////////////////////Clients-Waivers Management/////////////////////////////////////////
-    
-    Route::prefix('waiver')->group(function(){
-        Route::get('list-waivers',[OwnerCheckInController::class,'listWaivers'])->name('owner.listWaivers');
-        // Route::get('list-waivers/{id}',[OwnerCheckInController::class,'listWaiversByUser'])->name('owner.listWaiversByUser');
-    });
-    
-    /////////////////////////////Clients-Payments Management/////////////////////////////////////////
-    
-    Route::prefix('payment')->group(function(){
-        Route::get('list',[OwnerPaymentController::class,'paymentPage'])->name('owner.listPayments');
-        Route::get('revenue-calculator-page',[OwnerPaymentController::class,'revenueCalculatorPage'])->name('owner.revenueCalculatorPage');
-        Route::post('revenue-calculate',[OwnerPaymentController::class,'revenueCalculate'])->name('owner.revenueCalculate');
-    });
-
-    });
-
-});
 
 ////////////////////////////////// Manager Routes ////////////////////////////////////////
 Route::prefix('manager')->group(function () {

@@ -400,111 +400,43 @@
 
                 <div class="space-y-5">
                  
-                 
-                 
-                  <div class="card xl:col-span-2 rounded-md bg-white dark:bg-slate-800 lg:h-full shadow-base">
-                      <div class="card-body p-6">
-                        <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
-                          <div class="flex-1">
-                            <div class="card-title text-slate-900 dark:text-white">Signed Waiver</div>
-                          </div>
-                          <div>
-                          
-                              </div>
-                        </header>
-                          <!-- BEGIN: Team Table -->
-                        
-
-                          <div class="overflow-x-auto -mx-6">
-                            <div class="inline-block min-w-full align-middle">
-                              <div class="overflow-hidden ">
-                                <table class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700">
-                                  <thead class=" bg-slate-200 dark:bg-slate-700">
-                           
-                          
-                           <tr>
-
-                                      <th scope="col" class=" table-th ">
-                                        Client First Name
-                                      </th>
-
-                                      <th scope="col" class=" table-th ">
-                                        Client Last Name
-                                      </th>
-
-                                      <th scope="col" class=" table-th ">
-                                       Waiver signed Location
-                                      </th>
-
-                                      <th scope="col" class=" table-th ">
-                                        Waiver signed
-                                      </th>
-
-                                      <th scope="col" class=" table-th ">
-                                        ACTION
-                                      </th>
-
-                           </tr>
-                                  </thead>
-                                  <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-                                @foreach($client_waivers as $waiver) 
-                                <tr>
-                                      <td class="table-td">
-                                        <div class="flex items-center">
-                                          <div class="flex-none">
-                                            <div class="w-8 h-8 rounded-[100%] ltr:mr-3 rtl:ml-3">
-                                              <img src="{{asset('dashboard/assets/images/users/user-1.jpg')}}" alt="" class="w-full h-full rounded-[100%] object-cover">
-                                            </div>
-                                          </div>
-                                         
-                                          <div class="flex-1 text-start">
-                                            <h4 class="text-sm font-medium text-slate-600 whitespace-nowrap">
-                                             {{$waiver->client->first_name ?? 'N/A'}}
-                                            </h4>
-                                          </div>
+                <div class="card xl:col-span-2">
+                        <div class="card-body flex flex-col p-6">
+                            <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                                <div class="flex-1">
+                                    <div class="card-title text-slate-900 dark:text-white">Update Client Info</div>
+                                </div>
+                            </header>
+                            <div class="card-text h-full ">
+                                <form class="space-y-4" method="post" action="{{ route('owner.updateClient', $client->id) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                                        <div class="input-area relative">
+                                            <label for="first_name" class="form-label">Full Name</label>
+                                            <input type="text" name="first_name" class="form-control @error('first_name') border-red-500 @enderror" placeholder="First Name" value="{{ old('first_name',$client->first_name) }}">
+                                            @error('first_name')
+                                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                      </td>
-                                     
-                                      <td class="table-td">{{$waiver->client->last_name ?? 'N/A'}}</td>
-                                      <td class="table-td">{{$waiver->location->name ?? 'N/A'}}</td>
-                                      <td class="table-td">{{$waiver->created_at->diffForHumans() ?? 'N/A'}}</td>
-                                      <td class="table-td">
-                                        <div class="relative">
-                                          
-                            
-                              <a href="{{route('owner.downloadWaiver',$waiver->id )}}">
-                                    <button class="btn inline-flex justify-center btn-primary btn-sm">
-                                  
-                                    <span class="flex items-center">
-                                        <span>Download PDF</span>
-                                    </span>
-                                  </button>
-                              </a>
-                              <!-- <a href="">
-                                  <button class="btn inline-flex justify-center btn-danger btn-sm">
-                                    <span class="flex items-center">
-                                        <span>Delete</span>
-                                    </span>
-                                  </button>
-                              </a> -->
+                                        <div class="input-area relative">
+                                            <label for="last_name" class="form-label">Full Name</label>
+                                            <input type="text" name="last_name" class="form-control @error('last_name') border-red-500 @enderror" placeholder="Last Name" value="{{ old('last_name',$client->last_name) }}">
+                                            @error('last_name')
+                                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                      </td>
-                               </tr>
-                            @endforeach
-                                  </tbody>
-                                </table>
-                                
-                              </div>
-                              
+                                        
+                                        
+
+                                    </div>
+                                    <button type="submit" class="btn inline-flex justify-center btn-dark">Update</button>
+                                </form>
                             </div>
-                           
-                          </div>
-                         
-                          <!-- END: Team table -->
-
                         </div>
-                       
-                  </div>
+                    </div>
+
+                 
                  
                 </div>
 
@@ -514,24 +446,15 @@
           </div>
         </div>
       </div>
-      {{$client_waivers->links()}}
+      
       <!-- BEGIN: Footer For Desktop and tab -->
     @include('dashboard.includes.copyright')
       <!-- END: Footer For Desktop and tab -->
-      <div id="confirmationModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <p>Are you sure you want to delete?</p>
-        <button id="confirmDelete">Yes</button>
-        <button id="cancelDelete">Cancel</button>
-    </div>
-</div>
+
      
   </main>
-
   
   <!-- scripts -->
 @include('dashboard.includes.footer')
-
 </body>
-
 </html>

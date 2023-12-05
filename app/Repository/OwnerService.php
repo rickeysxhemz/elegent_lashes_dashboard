@@ -12,6 +12,11 @@ use App\Models\LocationUser;
 use App\Models\Location;
 use App\Models\LocationTechnician;
 use Illuminate\Http\Request;
+use App\Models\ClientCheckInTechnician;
+use App\Models\Payment;
+use App\Models\Client;
+use App\Models\ClientWaiver;
+use App\Models\ClientCheckIn;
 
 class OwnerService
 {
@@ -42,7 +47,7 @@ class OwnerService
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('owner.loginPage');
+        return redirect()->route('dashboard')->with('message', 'You are logged out');
     }
 
     public function changePasswordPage()
@@ -68,7 +73,40 @@ class OwnerService
 
     public function dashboard()
     {
-        return view('dashboard.owner.index');
+        $total_Task = ClientCheckInTechnician::count();
+        $total_services_Done = ClientCheckInTechnician::where('status','completed')->count();
+        $total_Task_Assigned = ClientCheckInTechnician::where('status','pending')->count();
+        $total_clients = Client::count();
+        $progress = ($total_services_Done/$total_Task)*100;
+        $progress = ceil($progress);
+        $total_earning = Payment::sum('payment_amount');
+        $total_tips = Payment::sum('tips');
+        $grand_total = $total_earning + $total_tips;
+        $waivers = ClientWaiver::count();
+        $today_check_ins = ClientCheckIn::whereDate('created_at', DB::raw('CURDATE()'))
+        ->with('client', 'location')
+        ->get();
+        $technicians = User::with(['roles','technician_locations.location'])->whereHas('roles', function ($query) {
+            $query->where('name', 'technician');
+        })->get();
+        // dd($technicians);
+        $client_waivers = ClientWaiver::with('client')
+                        ->latest()
+                        ->take(5) 
+                        ->get();
+        return view('dashboard.owner.index',compact('total_Task',
+                                                    'total_services_Done',
+                                                    'total_Task_Assigned',
+                                                    'progress',
+                                                    'total_earning',
+                                                    'total_tips',
+                                                    'grand_total',
+                                                    'total_clients',
+                                                    'waivers',
+                                                    'today_check_ins',
+                                                    'technicians',
+                                                    'client_waivers'
+                                                ));
     }
 
     public function manageManager()
@@ -296,4 +334,5 @@ class OwnerService
             return false;
         }
     }
+    
 }
