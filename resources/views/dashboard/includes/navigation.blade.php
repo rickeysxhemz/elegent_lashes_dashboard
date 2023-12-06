@@ -131,15 +131,24 @@
               </span>     
             </a>
           </li>
-          <!-- <li class="sidebar-menu-title">Check Ins</li>
+          <li class="sidebar-menu-title">Historical Checkins</li>
           <li>
-            <a href="{{route('owner.listCheckins')}}" class="navItem">
+            <a href="{{route('manager.listCheckins')}}" class="navItem">
               <span class="flex items-center">
             <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
-            <span>Complete Task</span>
+            <span>Previous Checkin</span>
               </span>
             </a>
-          </li> -->
+          </li>
+          
+          <li>
+            <a href="{{route('manager.assignedCheckins')}}" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
+            <span>Assigned Checkin</span>
+              </span>
+            </a>
+          </li>
       @endif
       @if(auth()->user()->hasRole('technician'))
       <ul class="sidebar-menu">

@@ -43,4 +43,24 @@ class ManagerDashboardController extends Controller
     {
         return $this->managerDashboardService->assignCheckIn($request);
     }
+
+    public function listCheckins()
+    {
+        return $this->managerDashboardService->listCheckins();
+    }
+
+    public function assignedCheckins()
+    {
+        return $this->managerDashboardService->assignedCheckins();
+    }
+
+    public function updateAssignedCheckins($id)
+    {
+        return $this->managerDashboardService->updateAssignedCheckins($id);
+    }
+
+    public function updateAssignedCheckinsTask(Request $request)
+    {
+        return $this->managerDashboardService->updateAssignedCheckinsTask($request);
+    }
 }

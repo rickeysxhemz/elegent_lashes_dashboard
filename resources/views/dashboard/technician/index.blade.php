@@ -1504,7 +1504,7 @@
                     <div class="lg:h-8 lg:w-8 h-7 w-7 rounded-full flex-1 ltr:mr-[10px] rtl:ml-[10px]">
                       <img src="{{asset('dashboard/assets/images/all-img/user.png')}}" alt="user" class="block w-full h-full object-cover rounded-full">
                     </div>
-                    <span class="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap">Albert Flores</span>
+                    <span class="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap">{{auth()->user()->name}}</span>
                     <svg class="w-[16px] h-[16px] dark:text-white hidden lg:inline-block text-base inline-block ml-[10px] rtl:mr-[10px]" aria-hidden="true" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
@@ -1560,21 +1560,8 @@
 
                 <div class="space-y-5">
                   <div class="flex justify-between flex-wrap items-center mb-6">
-                    <h4 class="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4 mb-1 sm:mb-0">Project</h4>
-                    <div class="flex sm:space-x-4 space-x-2 sm:justify-end items-center rtl:space-x-reverse">
-                      <button class="btn inline-flex justify-center bg-white text-slate-700 dark:bg-slate-700 !font-normal dark:text-white ">
-                        <span class="flex items-center">
-                        <iconify-icon class="text-xl ltr:mr-2 rtl:ml-2 font-light" icon="heroicons-outline:calendar"></iconify-icon>
-                        <span>Weekly</span>
-                        </span>
-                      </button>
-                      <button class="btn inline-flex justify-center bg-white text-slate-700 dark:bg-slate-700 !font-normal dark:text-white ">
-                        <span class="flex items-center">
-                        <iconify-icon class="text-xl ltr:mr-2 rtl:ml-2 font-light" icon="heroicons-outline:filter"></iconify-icon>
-                        <span>Select Date</span>
-                        </span>
-                      </button>
-                    </div>
+                    <h4 class="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4 mb-1 sm:mb-0">Tasks Details</h4>
+                    
                   </div>
                   <div class="grid grid-cols-12 gap-5">
                     <div class="lg:col-span-8 col-span-12 space-y-5">
@@ -1594,7 +1581,7 @@
                                     Total Task
                                 </span>
                                 <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium">
-                                    64
+                                    {{$total_assigned_tasks ?? 0}}
                                 </span>
                               </div>
 
@@ -1603,11 +1590,11 @@
                                   <iconify-icon icon=heroicons-outline:chart-pie></iconify-icon>
                                 </div>
                                 <span class="block text-sm text-slate-600 font-medium dark:text-white mb-1">
-            Completed 
-        </span>
+                                    Completed 
+                                </span>
                                 <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium">
-            45
-        </span>
+                                    {{$total_completed_tasks ?? 0}}
+                                </span>
                               </div>
 
                               <div class=" bg-primary-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-50 text-center">
@@ -1615,11 +1602,11 @@
                                   <iconify-icon icon=heroicons-outline:clock></iconify-icon>
                                 </div>
                                 <span class="block text-sm text-slate-600 font-medium dark:text-white mb-1">
-            Hours
-        </span>
+                                   Total Tips
+                                </span>
                                 <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium">
-            190
-        </span>
+                                        {{$total_tips ?? 0}}
+                                    </span>
                               </div>
 
                               <div class=" bg-success-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-50 text-center">
@@ -1627,34 +1614,20 @@
                                   <iconify-icon icon=heroicons-outline:calculator></iconify-icon>
                                 </div>
                                 <span class="block text-sm text-slate-600 font-medium dark:text-white mb-1">
-            Spendings
-        </span>
+                                   Payments
+                                </span>
                                 <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium">
-            $3,564
-        </span>
+                                      {{$total_payment ?? 0}}
+                                  </span>
                               </div>
 
                               <!-- END: Group Chart5 -->
                             </div>
                           </div>
-                          <div class="xl:col-span-4 col-span-12">
-                            <div class="bg-slate-50 dark:bg-slate-900 rounded-md p-4">
-                              <span class="block dark:text-slate-400 text-sm text-slate-600">
-                                    Progress
-                                </span>
-                              <div class="donut-chart" height="110" colors="#0CE7FA,#E2F6FD"></div>
-                            </div>
-                          </div>
+                          
                         </div>
                       </div>
-                      <!-- <div class="card">
-                        <div class="card-header">
-                          <h4 class="card-title">Deal distribution by stage</h4>
-                        </div>
-                        <div class="card-body p-6">
-                          <div id="areaChart" height="310"></div>
-                        </div>
-                      </div> -->
+                    
                     </div> 
                     <div class="xl:col-span-4 col-span-12">
                       <div class="card">
@@ -1732,7 +1705,23 @@
                                    
                                   @foreach($technician_assigned_tasks as $technician_assigned_task)
                                     <tr>
-                                      <td class="table-td">
+                                    
+                                    <td class="table-td">
+                                        <div class="flex items-center">
+                                          <div class="flex-none">
+                                            <div class="w-8 h-8 rounded-[100%] ltr:mr-3 rtl:ml-3">
+                                              <img src="{{asset('dashboard/assets/images/users/user-2.jpg')}}" alt="" class="w-full h-full rounded-[100%] object-cover">
+                                            </div>
+                                          </div>
+                                          <div class="flex-1 text-start">
+                                            <h4 class="text-sm font-medium text-slate-600 whitespace-nowrap">
+                                             {{$technician_assigned_task->manager->name}}
+                                            </h4>
+                                          </div>
+                                        </div>
+                                      </td>
+
+                                    <td class="table-td">
                                         <div class="flex items-center">
                                           <div class="flex-none">
                                             <div class="w-8 h-8 rounded-[100%] ltr:mr-3 rtl:ml-3">
@@ -1768,7 +1757,7 @@
 
                                       </td>
                                       <td class="table-td">{{$technician_assigned_task->created_at->format('F j, Y g:i A') }}</td>
-                                      <td class="table-td"></td>
+                                      
                                       <td class="table-td">
                                         <div class="relative">
                                         @if($technician_assigned_task->status == 'pending')
@@ -1879,8 +1868,8 @@ var pusher = new Pusher('2080c6dc08df5ed47ee1', {
 
 var audio = new Audio("{{asset('dashboard/assets/notification/notify.mp3')}}");
 
-var channel = pusher.subscribe('notify-channel');
-channel.bind('notify-event', function(data) {
+var channel = pusher.subscribe('notify-channel-{{auth()->user()->id}}');
+channel.bind('notify-event-{{auth()->user()->id}}', function(data) {
   audio.currentTime = 0;
 
   // Play the audio

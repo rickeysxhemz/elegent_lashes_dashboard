@@ -14,13 +14,33 @@ use App\Models\Payment;
 class TechnicianService{
     public function dashboard()
     {
-        $technician_assigned_tasks = ClientCheckInTechnician::with('clientCheckIn.client_detail')
+        $total_assigned_tasks = ClientCheckInTechnician::where('technician_id',Auth::user()->id)->count();
+        $total_completed_tasks = ClientCheckInTechnician::where('technician_id',Auth::user()->id)->where('status','completed')->count();
+        
+        $totals = Transaction::where('technician_id', Auth::user()->id)
+        ->with('payments')
+        ->get()
+        ->reduce(function ($carry, $transaction) {
+            $carry['tips'] += $transaction->payments->sum('tips');
+            $carry['payment_total'] += $transaction->payments->sum('payment_total');
+            return $carry;
+        }, ['tips' => 0, 'payment_total' => 0]);
+
+        $total_tips = $totals['tips'];
+        $total_payment = $totals['payment_total'];
+        
+        $technician_assigned_tasks = ClientCheckInTechnician::with('clientCheckIn.client_detail','manager')
         ->where('technician_id',Auth::user()->id)
         // ->where('status','pending')
         ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END, status")
         ->paginate(10);
-        // dd($technician_assigned_tasks);
-        return view('dashboard.technician.index',compact('technician_assigned_tasks'));
+       
+        return view('dashboard.technician.index',compact('technician_assigned_tasks',
+                                                        'total_assigned_tasks'
+                                                        ,'total_completed_tasks',
+                                                        'total_tips',
+                                                        'total_payment'
+                                                        ));
     }
     public function loginPage()
     {

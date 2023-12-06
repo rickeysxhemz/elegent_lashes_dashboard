@@ -1504,7 +1504,7 @@
                     <div class="lg:h-8 lg:w-8 h-7 w-7 rounded-full flex-1 ltr:mr-[10px] rtl:ml-[10px]">
                       <img src="{{asset('dashboard/assets/images/all-img/user.png')}}" alt="user" class="block w-full h-full object-cover rounded-full">
                     </div>
-                    <span class="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap">Albert Flores</span>
+                    <span class="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap">{{auth()->user()->name}}</span>
                     <svg class="w-[16px] h-[16px] dark:text-white hidden lg:inline-block text-base inline-block ml-[10px] rtl:mr-[10px]" aria-hidden="true" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
@@ -1765,7 +1765,7 @@
                               <div class="overflow-hidden ">
                                 <table class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700">
                                   <thead class=" bg-slate-200 dark:bg-slate-700">
-                                  @foreach($technicians as $technician)
+                                  
                                   <tr>
 
                                       <th scope="col" class=" table-th ">
@@ -1786,7 +1786,7 @@
                                   </thead>
                                   <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
 
-                                  
+                                  @foreach($technicians as $technician)
                                     <tr>
                                       <td class="table-td">
                                         <div class="flex items-center">
@@ -1889,23 +1889,7 @@
       </div>
 
       <!-- BEGIN: Footer For Desktop and tab -->
-      <footer class="md:block hidden" id="footer">
-        <div class="site-footer px-6 bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-300 py-4 ltr:ml-[248px] rtl:mr-[248px]">
-          <div class="grid md:grid-cols-2 grid-cols-1 md:gap-5">
-            <div class="text-center ltr:md:text-start rtl:md:text-right text-sm">
-              COPYRIGHT ©
-              <span id="thisYear"></span>
-              DashCode, All rights Reserved
-            </div>
-            <div class="ltr:md:text-right rtl:md:text-end text-center text-sm">
-              Hand-crafted &amp; Made by
-              <a href="https://codeshaper.net" target="_blank" class="text-primary-500 font-semibold">
-                Codeshaper
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+     @include('dashboard.includes.copyright')
       <!-- END: Footer For Desktop and tab -->
 
       <div class="bg-white bg-no-repeat custom-dropshadow footer-bg dark:bg-slate-700 flex justify-around items-center

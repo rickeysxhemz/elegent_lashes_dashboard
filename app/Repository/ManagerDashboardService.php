@@ -46,8 +46,18 @@ class ManagerDashboardService
         
         if($user){
             $check_in_count = ClientCheckIn::where('location_id',$user->location_id)->where('manager_id',Auth::user()->id)->count();
-            $completed  = ClientCheckInTechnician::where('location_id',$user->location_id)->where('manager_id',Auth::user()->id)->where('status','completed')->count();
-            $pending  = ClientCheckInTechnician::where('location_id',$user->location_id)->where('manager_id',Auth::user()->id)->where('status','pending')->count();
+            $assigned  = ClientCheckInTechnician::where('location_id',$user->location_id)->where('manager_id',Auth::user()->id)->count();
+            
+            $not_assigned = ClientCheckIn::with('client')
+                            ->where('location_id',$user->location_id)
+                            ->where('manager_id',Auth::user()->id)
+                            ->whereDoesntHave('client_technician', function ($query) {
+                                $query->where('client_check_in_id', DB::raw('client_check_ins.id'));
+                            })
+                            ->orderBy('created_at','desc')
+                            ->count();
+            $completed = ClientCheckInTechnician::where('location_id',$user->location_id)->where('manager_id',Auth::user()->id)->where('status','completed')->count();
+            
             $check_ins = ClientCheckIn::with('client')
                         ->where('location_id',$user->location_id)
                         ->where('manager_id',Auth::user()->id)
@@ -56,9 +66,10 @@ class ManagerDashboardService
                         ->whereDoesntHave('client_technician', function ($query) {
                             $query->where('client_check_in_id', DB::raw('client_check_ins.id'));
                         })
+                        ->orderBy('created_at','desc')
                         ->paginate(10);
             
-            return view ('dashboard.manager.index',compact('check_in_count','completed','pending','check_ins'));
+            return view ('dashboard.manager.index',compact('check_in_count','assigned','not_assigned','completed','check_ins'));
         }
         else{
          return view('dashboard.manager.blank');}
@@ -96,6 +107,68 @@ class ManagerDashboardService
         session()->forget('assign_check_in_id');
         SendNotification::dispatch('You have been assigned a check in', $request->technician_id);
         return redirect()->route('manager.dashboard')->with('message','Check In Assigned Successfully');
+        }catch(Exception $e){
+            DB::rollback();
+            return redirect()->back()->with('error','Something went wrong');
+        }
+    }
+
+    public function listCheckins()
+    {
+        $user =LocationUser::where('user_id',Auth::user()->id)->first();
+        $check_ins = ClientCheckIn::with('client')
+        ->where('location_id',$user->location_id)
+        ->where('manager_id',Auth::user()->id)
+        ->where('created_at', '<',now()->toDateString())
+       
+        ->whereDoesntHave('client_technician', function ($query) {
+            $query->where('client_check_in_id', DB::raw('client_check_ins.id'));
+        })
+        ->orderBy('created_at','desc')
+        ->paginate(10);
+        return view('dashboard.manager.historical-checkins',compact('check_ins'));
+    }
+
+    public function assignedCheckins()
+    {
+        $user =LocationUser::where('user_id',Auth::user()->id)->first();
+        $check_ins = ClientCheckInTechnician::with('clientCheckIn.client_detail','technician','service','location','manager')
+        ->where('location_id',$user->location_id)
+        ->where('manager_id',Auth::user()->id)
+        ->where('status','pending')
+        ->orderBy('created_at','desc')
+        ->paginate(10);
+        
+        return view('dashboard.manager.assigned-checkins',compact('check_ins'));
+    }
+
+    public function updateAssignedCheckins($id)
+    {
+        $assigned_task = ClientCheckInTechnician::with('technician')->where('id',$id) ->first();
+        $technicians = User::role('technician')->get();
+        $services = Service::all();
+
+        return view('dashboard.manager.update-assigned-checkin',compact('assigned_task','technicians','services'));
+    }
+
+    public function updateAssignedCheckinsTask($request)
+    {
+        $request->validate([
+            'technician_id'=>'required',
+            'service_id'=>'required',
+        ]);
+        try{
+        DB::beginTransaction();
+        $client_technician = ClientCheckInTechnician::find($request->id);
+        $client_technician->technician_id=$request->technician_id;
+        $client_technician->service_id=$request->service_id;
+        $client_technician->save();
+        DB::commit();
+        
+        if($request->technician_id == $client_technician->technician_id){
+            SendNotification::dispatch('You have been assigned a check in', $request->technician_id);
+        }
+        return redirect()->route('manager.assignedCheckins')->with('message','Check In Assigned Successfully');
         }catch(Exception $e){
             DB::rollback();
             return redirect()->back()->with('error','Something went wrong');

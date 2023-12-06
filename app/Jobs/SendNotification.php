@@ -43,6 +43,8 @@ class SendNotification implements ShouldQueue
         );
 
         $data['message'] = $this->message;
-        $pusher->trigger('notify-channel', 'notify-event', $data);
+        $channel_name = 'notify-channel-' . $this->userId;
+        $event_name = 'notify-event-' . $this->userId;
+        $pusher->trigger($channel_name, $event_name, $data);
     }
 }

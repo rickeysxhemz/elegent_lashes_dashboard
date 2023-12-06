@@ -148,6 +148,13 @@ Route::prefix('manager')->group(function () {
             Route::post('assign-check-in',[ManagerDashboardController::class,'assignCheckIn'])->name('manager.assignCheckIn');
         });
 
+        Route::prefix('historical-checkins')->group(function(){
+            Route::get('list',[ManagerDashboardController::class,'listCheckins'])->name('manager.listCheckins');
+            Route::get('assigned-task',[ManagerDashboardController::class,'assignedCheckins'])->name('manager.assignedCheckins');
+            Route::get('update-assigned-task/{id}',[ManagerDashboardController::class,'updateAssignedCheckins'])->name('manager.updateAssignedCheckins');
+            Route::post('update-task',[ManagerDashboardController::class,'updateAssignedCheckinsTask'])->name('manager.updateAssignedCheckinsTask');
+        });
+
     });
 });    
 
