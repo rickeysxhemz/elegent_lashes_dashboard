@@ -149,6 +149,15 @@
               </span>
             </a>
           </li>
+          <li class="sidebar-menu-title">Checkins</li>
+          <li>
+            <a href="{{route('manager.listCompleted')}}" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
+            <span>Service Done</span>
+              </span>
+            </a>
+          </li>
       @endif
       @if(auth()->user()->hasRole('technician'))
       <ul class="sidebar-menu">

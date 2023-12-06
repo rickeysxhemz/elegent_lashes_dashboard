@@ -63,4 +63,9 @@ class ManagerDashboardController extends Controller
     {
         return $this->managerDashboardService->updateAssignedCheckinsTask($request);
     }
+
+    public function listCompleted()
+    {
+        return $this->managerDashboardService->listCompleted();
+    }
 }

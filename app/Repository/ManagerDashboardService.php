@@ -174,4 +174,17 @@ class ManagerDashboardService
             return redirect()->back()->with('error','Something went wrong');
         }
     }
+
+    public function listCompleted()
+    {
+        $user =LocationUser::where('user_id',Auth::user()->id)->first();
+        $check_ins = ClientCheckInTechnician::with('clientCheckIn.client_detail','technician','service','location','manager')
+        ->where('location_id',$user->location_id)
+        ->where('manager_id',Auth::user()->id)
+        ->where('status','completed')
+        ->orderBy('created_at','desc')
+        ->paginate(10);
+        
+        return view('dashboard.manager.list-checkins',compact('check_ins'));
+    }
 }

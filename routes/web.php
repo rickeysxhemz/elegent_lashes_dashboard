@@ -154,7 +154,10 @@ Route::prefix('manager')->group(function () {
             Route::get('update-assigned-task/{id}',[ManagerDashboardController::class,'updateAssignedCheckins'])->name('manager.updateAssignedCheckins');
             Route::post('update-task',[ManagerDashboardController::class,'updateAssignedCheckinsTask'])->name('manager.updateAssignedCheckinsTask');
         });
+        Route::prefix('services')->group(function(){
+            Route::get('list-all',[ManagerDashboardController::class,'listCompleted'])->name('manager.listCompleted');
 
+        });
     });
 });    
 
