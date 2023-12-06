@@ -28,7 +28,9 @@ class TechnicianService{
 
         $total_tips = $totals['tips'];
         $total_payment = $totals['payment_total'];
-        
+        $user = Auth::user();
+        $notifications_count = $user->unreadNotifications()->count();
+
         $technician_assigned_tasks = ClientCheckInTechnician::with('clientCheckIn.client_detail','manager')
         ->where('technician_id',Auth::user()->id)
         // ->where('status','pending')
@@ -39,7 +41,8 @@ class TechnicianService{
                                                         'total_assigned_tasks'
                                                         ,'total_completed_tasks',
                                                         'total_tips',
-                                                        'total_payment'
+                                                        'total_payment',
+                                                        'notifications_count'
                                                         ));
     }
     public function loginPage()

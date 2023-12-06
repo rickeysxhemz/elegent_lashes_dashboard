@@ -14,7 +14,7 @@
              
             </center>
             <div ng-app ng-init="checked = false">
-                <form class="form-signin" action="{{ route('login') }}" method="post" name="form"> 
+                <form class="form-signin" action="{{ route('index.login') }}" method="post" name="form"> 
                     <!-- <select class="form-styling" name="username" style="color: black;"> 
                               <option>Name</option>
                     </select> -->

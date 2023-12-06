@@ -11,7 +11,7 @@ use App\Http\Controllers\OwnerCheckInController;
 use App\Http\Controllers\ManagerDashboardController;
 use App\Http\Controllers\TechnicianController;
 use App\Http\Controllers\OwnerPaymentController;
-
+use App\Http\Controllers\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,9 +22,16 @@ use App\Http\Controllers\OwnerPaymentController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/dasboard', function () {
+    return view('dashboard.main');
+})->name('login');
+
+Route::middleware(['auth','role:manager|technician'])->group(function () {
+    Route::get('/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('markAllAsRead');
+});
 
 Route::get('/',[HomeController::class,'index'])->name('home');
-Route::post('manager-login',[AuthController::class,'managerLogin'])->name('login');
+Route::post('manager-login',[AuthController::class,'managerLogin'])->name('index.login');
 
 Route::middleware(['auth','role:manager'])->group(function () {
     
@@ -56,9 +63,7 @@ Route::middleware(['auth','role:manager'])->group(function () {
     
 });
 
-Route::get('/dasboard', function () {
-    return view('dashboard.main');
-})->name('dashboard');
+
 ////////////////////////////////  Owner Routes  /////////////////////////////////////////
 Route::prefix('owner')->group(function () {
     Route::get('login-page',[OwnerController::class,'loginPage'])->name('owner.loginPage');

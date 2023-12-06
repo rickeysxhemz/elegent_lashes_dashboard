@@ -12,7 +12,7 @@ use App\Models\ClientCheckInTechnician;
 use App\Models\Service;
 use Illuminate\Support\Facades\DB;
 use App\Jobs\SendNotification;
-
+use App\Notifications\TechnicianNotifications;
 class ManagerDashboardService
 {
    public function loginPage()
@@ -164,9 +164,10 @@ class ManagerDashboardService
         $client_technician->service_id=$request->service_id;
         $client_technician->save();
         DB::commit();
-        
+        $technician = User::find($client_technician->technician_id);
         if($request->technician_id == $client_technician->technician_id){
             SendNotification::dispatch('You have been assigned a check in', $request->technician_id);
+            $technician->notify(new TechnicianNotifications('Hello ,'.$technician->name.' You have been assigned a check in', $request->technician_id));
         }
         return redirect()->route('manager.assignedCheckins')->with('message','Check In Assigned Successfully');
         }catch(Exception $e){
