@@ -100,7 +100,7 @@
             </a>
           </li>
           <li>
-            <a href="" class="navItem">
+            <a href="{{route('owner.technicianPayment')}}" class="navItem">
               <span class="flex items-center">
             <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
             <span>Technician Payroll</span>

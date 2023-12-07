@@ -128,6 +128,8 @@ Route::middleware(['auth','role:owner'])->group(function () {
             Route::get('list',[OwnerPaymentController::class,'paymentPage'])->name('owner.listPayments');
             Route::get('revenue-calculator-page',[OwnerPaymentController::class,'revenueCalculatorPage'])->name('owner.revenueCalculatorPage');
             Route::post('revenue-calculate',[OwnerPaymentController::class,'revenueCalculate'])->name('owner.revenueCalculate');
+            Route::get('technician-payment',[OwnerPaymentController::class,'technicianPayment'])->name('owner.technicianPayment');
+            Route::post('technician-revenue-calculate',[OwnerPaymentController::class,'technicianRevenueCalculate'])->name('owner.technicianRevenueCalculate');
         });
 
         });

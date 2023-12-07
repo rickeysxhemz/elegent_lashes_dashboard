@@ -47,7 +47,7 @@ class OwnerService
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('dashboard')->with('message', 'You are logged out');
+        return redirect()->route('login')->with('message', 'You are logged out');
     }
 
     public function changePasswordPage()

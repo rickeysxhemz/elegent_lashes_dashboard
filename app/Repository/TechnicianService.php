@@ -65,14 +65,14 @@ class TechnicianService{
                 return redirect()->back()->with('error', 'Invalid password');
             }
         } else {
-            return redirect()->back()->with('error', 'Invalid phone number');
+            return redirect()->back()->with('error', 'Invalid Email');
         }
     }
 
     public function logout()
     {
         Auth::logout();
-        return redirect()->route('dashboard')->with('message', 'You are logged out');
+        return redirect()->route('login')->with('message', 'You are logged out');
     }
 
     public function addPayments($id)

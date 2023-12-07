@@ -37,7 +37,7 @@ class ManagerDashboardService
                 return redirect()->back()->with('error', 'Invalid password');
             }
         } else {
-            return redirect()->back()->with('error', 'Invalid phone number');
+            return redirect()->back()->with('error', 'Invalid Email');
         }
     }
    public function dashboard()
@@ -48,6 +48,9 @@ class ManagerDashboardService
             $check_in_count = ClientCheckIn::where('location_id',$user->location_id)->where('manager_id',Auth::user()->id)->count();
             $assigned  = ClientCheckInTechnician::where('location_id',$user->location_id)->where('manager_id',Auth::user()->id)->count();
             
+
+            $notifications_count = auth()->user()->unreadNotifications()->count();
+
             $not_assigned = ClientCheckIn::with('client')
                             ->where('location_id',$user->location_id)
                             ->where('manager_id',Auth::user()->id)
@@ -69,7 +72,7 @@ class ManagerDashboardService
                         ->orderBy('created_at','desc')
                         ->paginate(10);
             
-            return view ('dashboard.manager.index',compact('check_in_count','assigned','not_assigned','completed','check_ins'));
+            return view ('dashboard.manager.index',compact('check_in_count','assigned','not_assigned','completed','check_ins','notifications_count'));
         }
         else{
          return view('dashboard.manager.blank');}
@@ -77,14 +80,15 @@ class ManagerDashboardService
   public function logout()
   {
         Auth::logout();
-        return redirect()->route('dashboard')->with('message','You are logged out');
+        return redirect()->route('login')->with('message','You are logged out');
   }
   public function assignCheckInPage($id)
   {
         session(['assign_check_in_id' => $id]);
         $services=Service::all();
         $technicians=User::role('technician')->get();
-        return view('dashboard.manager.assign',compact('services','technicians'));
+        $notifications_count = auth()->user()->unreadNotifications()->count();
+        return view('dashboard.manager.assign',compact('services','technicians','notifications_count'));
   }
 
   public function assignCheckIn($request)
@@ -105,9 +109,16 @@ class ManagerDashboardService
         $client_technician->save();
         DB::commit();
         session()->forget('assign_check_in_id');
+        
         SendNotification::dispatch('You have been assigned a check in', $request->technician_id);
+        
+        $technician = User::find($request->technician_id);
+        $technician->notify(new TechnicianNotifications('Hello ,'.$technician->name.' You have been assigned a check in', $request->technician_id));
+       
         return redirect()->route('manager.dashboard')->with('message','Check In Assigned Successfully');
-        }catch(Exception $e){
+       
+    }
+    catch(Exception $e){
             DB::rollback();
             return redirect()->back()->with('error','Something went wrong');
         }
@@ -126,7 +137,9 @@ class ManagerDashboardService
         })
         ->orderBy('created_at','desc')
         ->paginate(10);
-        return view('dashboard.manager.historical-checkins',compact('check_ins'));
+        $notifications_count = auth()->user()->unreadNotifications()->count();
+
+        return view('dashboard.manager.historical-checkins',compact('check_ins','notifications_count'));
     }
 
     public function assignedCheckins()
@@ -138,8 +151,9 @@ class ManagerDashboardService
         ->where('status','pending')
         ->orderBy('created_at','desc')
         ->paginate(10);
-        
-        return view('dashboard.manager.assigned-checkins',compact('check_ins'));
+        $notifications_count = auth()->user()->unreadNotifications()->count();
+
+        return view('dashboard.manager.assigned-checkins',compact('check_ins','notifications_count'));
     }
 
     public function updateAssignedCheckins($id)
@@ -147,8 +161,9 @@ class ManagerDashboardService
         $assigned_task = ClientCheckInTechnician::with('technician')->where('id',$id) ->first();
         $technicians = User::role('technician')->get();
         $services = Service::all();
+        $notifications_count = auth()->user()->unreadNotifications()->count();
 
-        return view('dashboard.manager.update-assigned-checkin',compact('assigned_task','technicians','services'));
+        return view('dashboard.manager.update-assigned-checkin',compact('assigned_task','technicians','services','notifications_count'));
     }
 
     public function updateAssignedCheckinsTask($request)
@@ -185,7 +200,8 @@ class ManagerDashboardService
         ->where('status','completed')
         ->orderBy('created_at','desc')
         ->paginate(10);
-        
-        return view('dashboard.manager.list-checkins',compact('check_ins'));
+        $notifications_count = auth()->user()->unreadNotifications()->count();
+
+        return view('dashboard.manager.list-checkins',compact('check_ins','notifications_count'));
     }
 }

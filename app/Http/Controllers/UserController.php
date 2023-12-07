@@ -11,6 +11,8 @@ use App\Models\LocationUser;
 use App\Repository\Repository;
 use Illuminate\Support\Str;
 use App\Http\Requests\AuthRequests\UserRegisterRequest;
+use App\Jobs\SendNotification;
+use App\Notifications\TechnicianNotifications;
 
 class UserController extends Controller
 {
@@ -42,6 +44,10 @@ class UserController extends Controller
             $check_in->save();
             $token=Str::random(60);
             session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone,'client_location'=>$manager->location->location]);
+
+            SendNotification::dispatch('Hello manager, You have a new Check In by '.$client->first_name.' '.$client->last_name, auth()->user()->id);
+            auth()->user()->notify(new TechnicianNotifications('Hello manager, You have a new Check In by '.$client->first_name.' '.$client->last_name,auth()->user()->id));
+
             return redirect()->route('user.waiver')->with('message', 'you are checked in successfully ');
             
         }else{

@@ -403,7 +403,7 @@
                 <div class="card xl:col-span-2 rounded-md bg-white dark:bg-slate-800 lg:h-full shadow-base">
                       <div class="card-body p-6">
 
-                <div class="card">
+                   <div class="card">
                       <div class="card-body">
                         <div class="card-text h-full">
                         @if(isset($totalPaymentCalculated))

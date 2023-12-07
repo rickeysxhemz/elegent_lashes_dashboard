@@ -12,6 +12,8 @@ use Exception;
 use Illuminate\Http\Request;
 use TCPDF;
 use App\Models\ClientWaiver;
+use App\Jobs\SendNotification;
+use App\Notifications\TechnicianNotifications;
 
 class Repository{
 
@@ -40,6 +42,9 @@ class Repository{
         
         DB::commit();
         
+        SendNotification::dispatch('Hello manager, You have a new Check In by '.$client->first_name.' '.$client->last_name, auth()->user()->id);
+        auth()->user()->notify(new TechnicianNotifications('Hello manager, You have a new Check In by '.$client->first_name.' '.$client->last_name,auth()->user()->id));
+
         session(['remember_token' => $token, 'client_id' => $client->id,'client_name'=>$client->first_name.' '.$client->last_name,'client_phone'=>$client->phone,'client_location'=>$manager->location->location]);
         
         return true;
