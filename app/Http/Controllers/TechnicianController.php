@@ -38,4 +38,19 @@ class TechnicianController extends Controller
     {
         return $this->technicianService->addPaymentsStore($request);
     }
+
+    public function listPayments()
+    {
+        return $this->technicianService->listPayments();
+    }
+
+    public function editPaymentPage($id)
+    {
+        return $this->technicianService->editPaymentPage($id);
+    }
+
+    public function editPayment(Request $request)
+    {
+        return $this->technicianService->editPayment($request);
+    }
 }

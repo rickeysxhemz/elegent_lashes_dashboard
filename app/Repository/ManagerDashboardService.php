@@ -95,7 +95,7 @@ class ManagerDashboardService
   {
         $request->validate([
             'technician_id'=>'required',
-            'service_id'=>'required',
+            // 'service_id'=>'required',
         ]);
         try{
         DB::beginTransaction();
@@ -103,7 +103,7 @@ class ManagerDashboardService
         $client_technician = new ClientCheckInTechnician();
         $client_technician->client_check_in_id=$check_in_id;
         $client_technician->technician_id=$request->technician_id;
-        $client_technician->service_id=$request->service_id;
+        $client_technician->service_id=1;
         $client_technician->location_id=ClientCheckIn::find($check_in_id)->location_id;
         $client_technician->manager_id=Auth::user()->id;
         $client_technician->save();
@@ -170,13 +170,13 @@ class ManagerDashboardService
     {
         $request->validate([
             'technician_id'=>'required',
-            'service_id'=>'required',
+            // 'service_id'=>'required',
         ]);
         try{
         DB::beginTransaction();
         $client_technician = ClientCheckInTechnician::find($request->id);
         $client_technician->technician_id=$request->technician_id;
-        $client_technician->service_id=$request->service_id;
+        $client_technician->service_id=1;
         $client_technician->save();
         DB::commit();
         $technician = User::find($client_technician->technician_id);
@@ -194,12 +194,13 @@ class ManagerDashboardService
     public function listCompleted()
     {
         $user =LocationUser::where('user_id',Auth::user()->id)->first();
-        $check_ins = ClientCheckInTechnician::with('clientCheckIn.client_detail','technician','service','location','manager')
+        $check_ins = ClientCheckInTechnician::with('clientCheckIn.client_detail','technician','service','location','manager','transaction.service')
         ->where('location_id',$user->location_id)
         ->where('manager_id',Auth::user()->id)
         ->where('status','completed')
         ->orderBy('created_at','desc')
         ->paginate(10);
+        // dd($check_ins);
         $notifications_count = auth()->user()->unreadNotifications()->count();
 
         return view('dashboard.manager.list-checkins',compact('check_ins','notifications_count'));

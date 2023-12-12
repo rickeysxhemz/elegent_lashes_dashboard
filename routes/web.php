@@ -27,6 +27,9 @@ Route::get('/dasboard', function () {
 })->name('login');
 
 Route::middleware(['auth','role:manager|technician'])->group(function () {
+    Route::prefix('notifications')->group(function (){
+        Route::get('/all', [NotificationController::class, 'manager'])->name('notifications.manager');
+    });
     Route::get('/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('markAllAsRead');
 });
 
@@ -184,5 +187,8 @@ Route::middleware(['auth','role:technician'])->group(function () {
     Route::prefix('payment')->group(function () {
         Route::get('add-page/{id}',[TechnicianController::class,'addPayments'])->name('technician.addPayments');
         Route::post('add',[TechnicianController::class,'addPaymentsStore'])->name('technician.addPaymentsStore');
+        Route::get('list',[TechnicianController::class,'listPayments'])->name('technician.listPayments');
+        Route::get('edit-page/{id}',[TechnicianController::class,'editPaymentPage'])->name('technician.editPaymentPage');
+        Route::post('edit',[TechnicianController::class,'editPayment'])->name('technician.editPayment');
     });
 });

@@ -53,13 +53,13 @@
 
 
 
-              
+             
               <!-- end top menu -->
               <div class="nav-tools flex items-center lg:space-x-5 space-x-3 rtl:space-x-reverse leading-0">
 
                 <!-- BEGIN: Language Dropdown  -->
 
-              
+
                 <!-- BEGIN: Toggle Theme -->
                 <div>
                   <button id="themeMood" class="h-[28px] w-[28px] lg:h-[32px] lg:w-[32px] lg:bg-gray-500-f7 bg-slate-50 dark:bg-slate-900 lg:dark:bg-slate-900 dark:text-white text-slate-900 cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center">
@@ -78,26 +78,23 @@
                 </div>
                 <!-- END: gray-scale Dropdown -->
 
-
-                <!-- BEGIN: Notification Dropdown -->
                 <!-- Notifications Dropdown area -->
                 <div class="relative md:block hidden">
                   <button class="lg:h-[32px] lg:w-[32px] lg:bg-slate-100 lg:dark:bg-slate-900 dark:text-white text-slate-900 cursor-pointer
       rounded-full text-[20px] flex flex-col items-center justify-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <iconify-icon class="animate-tada text-slate-800 dark:text-white text-xl" icon="heroicons-outline:bell"></iconify-icon>
-                    @if(isset($notifications_count) && $notifications_count > 0)
-                    <span class="absolute -right-1 lg:top-0 -top-[6px] h-4 w-4 bg-red-500 text-[8px] font-semibold flex flex-col items-center
+                    @if(auth()->user()->unreadNotifications->count() > 0)
+                      <span class="absolute -right-1 lg:top-0 -top-[6px] h-4 w-4 bg-red-500 text-[8px] font-semibold flex flex-col items-center
                         justify-center rounded-full text-white z-[99]">
-                      
-                        {{$notifications_count}}
-                      
+                       {{auth()->user()->unreadNotifications->count()}}
                       </span>
+                    
                     @endif
                   </button>
                   <!-- Notifications Dropdown -->
                   <div class="dropdown-menu z-10 hidden bg-white shadow w-[335px]
       dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md overflow-hidden lrt:origin-top-right rtl:origin-top-left">
-               @if(isset($notifications_count) && $notifications_count > 0)
+               @if(auth()->user()->unreadNotifications->count() > 0)
                     <div class="flex items-center justify-between py-4 px-4">
                       <h3 class="text-sm font-Inter font-medium text-slate-700 dark:text-white">Notifications</h3>
                       <a class="text-xs font-Inter font-normal underline text-slate-500 dark:text-white" href="{{ route('markAllAsRead') }}">Mark as Read</a>
@@ -144,7 +141,7 @@
                     <ul class="py-1 text-sm text-slate-800 dark:text-slate-200">
                       
                       <li>
-                        <a href="{{route('manager.logout')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+                        <a href="{{route('technician.logout')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
             dark:text-white font-normal">
                           <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
                           <span class="font-Inter">Logout</span>
@@ -189,100 +186,10 @@
 
                 <div class="space-y-5">
                   <div class="flex justify-between flex-wrap items-center mb-6">
-                    <h4 class="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4 mb-1 sm:mb-0">CheckIns Details</h4>
+                    <h4 class="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4 mb-1 sm:mb-0">Tasks Details</h4>
                     
                   </div>
-                  <div class="grid grid-cols-12 gap-5">
-                    <div class="lg:col-span-8 col-span-12 space-y-5">
-                      <div class="card p-6">
-                        <div class="grid grid-cols-12 gap-5">
-                          <div class="xl:col-span-8 col-span-12">
-                            <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-3">
-
-                              <!-- BEGIN: Group Chart5 -->
-
-
-                              <div class=" bg-info-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-50 text-center">
-                                <div class="text-info-500 mx-auto h-10 w-10 flex flex-col items-center justify-center rounded-full bg-white text-2xl mb-4">
-                                  <iconify-icon icon=heroicons-outline:menu-alt-1></iconify-icon>
-                                </div>
-                                <span class="block text-sm text-slate-600 font-medium dark:text-white mb-1">
-                                Total
-                            </span>
-                                <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium">
-                                {{$check_in_count ?? 0}}
-                            </span>
-                              </div>
-
-                              <div class=" bg-warning-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-50 text-center">
-                                <div class="text-warning-500 mx-auto h-10 w-10 flex flex-col items-center justify-center rounded-full bg-white text-2xl mb-4">
-                                  <iconify-icon icon=heroicons-outline:chart-pie></iconify-icon>
-                                </div>
-                                <span class="block text-sm text-slate-600 font-medium dark:text-white mb-1">
-                                    Not Assign
-                                </span>
-                                <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium">
-                                  {{$not_assigned ?? 0}}
-                              </span>
-                              </div>
-
-                              <div class=" bg-primary-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-50 text-center">
-                                <div class="text-primary-500 mx-auto h-10 w-10 flex flex-col items-center justify-center rounded-full bg-white text-2xl mb-4">
-                                  <iconify-icon icon=heroicons-outline:clock></iconify-icon>
-                                </div>
-                                <span class="block text-sm text-slate-600 font-medium dark:text-white mb-1">
-                                 Assigned
-                              </span>
-                                <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium">
-                                {{$assigned ?? 0}}
-                            </span>
-                              </div>
-
-                              <div class=" bg-success-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-50 text-center">
-                                <div class="text-success-500 mx-auto h-10 w-10 flex flex-col items-center justify-center rounded-full bg-white text-2xl mb-4">
-                                  <iconify-icon icon=heroicons-outline:calculator></iconify-icon>
-                                </div>
-                                <span class="block text-sm text-slate-600 font-medium dark:text-white mb-1">
-                               Completed 
-                            </span>
-                                <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium">
-                                  {{$completed ?? 0}}
-                              </span>
-                              </div>
-
-                              <!-- END: Group Chart5 -->
-                            </div>
-                          </div>
-                          
-                        </div>
-                      </div>
-                      <!-- <div class="card">
-                        <div class="card-header">
-                          <h4 class="card-title">Deal distribution by stage</h4>
-                        </div>
-                        <div class="card-body p-6">
-                          <div id="areaChart" height="310"></div>
-                        </div>
-                      </div> -->
-                    </div> 
-                    <div class="xl:col-span-4 col-span-12">
-                      <div class="card">
-                        <div class="card-header">
-                          <h4 class="card-title">Today</h4>
-                        </div>
-                        <div class="card-body p-6">
-                          <div class="mb-12">
-                          <div class="datetime-container" style="text-align:center">
-                                <div class="date" style="font-size: 24px;color: #333;">@php echo now('America/New_York')->format('D, M j, Y'); @endphp</div>
-                                <div class="time" style="font-size: 36px;color: #1e90ff;" id="clock"></div>
-                            </div>
-                          </div>
-
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                 
                  
                   <!-- <div class="grid grid-cols-12 gap-5">
                     <div class="xl:col-span-8 lg:col-span-7 col-span-12">
@@ -317,19 +224,38 @@
                                   <thead class=" bg-slate-200 dark:bg-slate-700">
                                     <tr>
 
-                                      <th scope="col" class=" table-th ">
-                                        Customer
+                                    <th scope="col" class=" table-th ">
+                                        id
                                       </th>
-
                                       <th scope="col" class=" table-th ">
-                                        STATUS
-                                      </th>
-
+                                        Client
+                                      </th>  
                                       <th scope="col" class=" table-th ">
                                         TIME
                                       </th>
+                                      <th scope="col" class=" table-th ">
+                                        SERVICE
+                                      </th>
+                                      <th scope="col" class=" table-th ">
+                                        CASH
+                                      </th>
+                                      <th scope="col" class=" table-th ">
+                                        CARD
+                                      </th>
+                                      <th scope="col" class=" table-th ">
+                                        TIPS
+                                      </th>
+                                      <th scope="col" class=" table-th ">
+                                        NOTE
+                                      </th>
+     
+                                     
 
-                                    
+                                     
+
+                                     
+
+                                      
 
                                       <th scope="col" class=" table-th ">
                                         ACTION
@@ -340,9 +266,13 @@
                                   <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
 
                                    
-                                  @foreach($check_ins as $check_in)
+                                  @foreach($technician_assigned_tasks as $technician_assigned_task)
                                     <tr>
-                                      <td class="table-td">
+                                    <td class="table-td">
+  
+                                    {{$loop->iteration}}
+                                  </td> 
+                                  <td class="table-td">
                                         <div class="flex items-center">
                                           <div class="flex-none">
                                             <div class="w-8 h-8 rounded-[100%] ltr:mr-3 rtl:ml-3">
@@ -351,34 +281,51 @@
                                           </div>
                                           <div class="flex-1 text-start">
                                             <h4 class="text-sm font-medium text-slate-600 whitespace-nowrap">
-                                             {{$check_in->client->first_name}}
+                                             {{$technician_assigned_task->clientCheckIn->client_detail->first_name}}
                                             </h4>
                                           </div>
                                         </div>
                                       </td>
-                                      <td class="table-td ">
-                                        <span class="block min-w-[140px] text-left">
-                                    <span class="inline-block text-center mx-auto py-1">
-                                        
-                                            <span class="flex items-center space-x-3 rtl:space-x-reverse">
-                                                <span class="h-[6px] w-[6px] bg-success-500 rounded-full inline-block ring-4 ring-opacity-30 ring-success-500"></span>
-                                        <span>Check_in</span>
-                                        </span>
-                                        </span>
-                                        </span>
+                                  
+                                  <td class="table-td">{{$technician_assigned_task->created_at->format('h:i A') }}</td>
+                                  <td class="table-td">{{$technician_assigned_task->transaction->service->name}}</td>
+                                  @if((implode(', ', $technician_assigned_task->transaction->payments->pluck('payment_method')->toArray())) == 'cash')
+                                  <td class="table-td"> {{implode(', ', $technician_assigned_task->transaction->payments->pluck('payment_amount')->toArray())}}</td>
+                                  @else
+                                  <td class="table-td"></td>
+                                  @endif
 
-                                      </td>
-                                      <td class="table-td">{{$check_in->created_at->format('F j, Y g:i A') }}</td>
-                                     
+                                  @if((implode(', ', $technician_assigned_task->transaction->payments->pluck('payment_method')->toArray())) == 'debit')
+                                  <td class="table-td">{{implode(', ', $technician_assigned_task->transaction->payments->pluck('payment_amount')->toArray())}}</td>
+                                  @else
+                                  <td class="table-td"></td>
+                                  @endif
+
+                                  <td class="table-td">{{implode(', ', $technician_assigned_task->transaction->payments->pluck('tips')->toArray())}}</td>
+                                  <td class="table-td">{{implode(', ', $technician_assigned_task->transaction->transaction_details->pluck('Note')->toArray())}}</td>
+                                    
+                                      
+                                      
                                       <td class="table-td">
                                         <div class="relative">
-                                        <a href="{{route('manager.assignCheckInPage',$check_in->id)}}">
+                                  @if($technician_assigned_task->status == 'pending')
+                                        <a href="{{route('technician.addPayments',$technician_assigned_task->client_check_in_id)}}">
                                         <button class="btn inline-flex justify-center btn-danger btn-sm">
                                     <span class="flex items-center">
-                                        <span>Assign</span>
+                                        <span>Tap to complete</span>
                                     </span>
                                   </button>
                                   </a>
+                                  @elseif($technician_assigned_task->status == 'completed')
+                                   
+                                  <a href="{{route('technician.editPaymentPage',$technician_assigned_task->client_check_in_id)}}">
+                                  <button class="btn inline-flex justify-center btn-success btn-sm">
+                                    <span class="flex items-center">
+                                        <span>Edit</span>
+                                    </span>
+                                  </button>
+                                 </a>
+                                  @endif
                                         </div>
                                       </td>
                                 </tr>
@@ -400,7 +347,8 @@
                     
                   </div>
                 </div> -->
-                {{$check_ins->links()}}
+                <!--  -->
+                {{$technician_assigned_tasks->links()}}
               </div>
             </div>
           </div>
@@ -408,13 +356,16 @@
       </div>
 
       <!-- BEGIN: Footer For Desktop and tab -->
-      @include('dashboard.includes.copyright')
-      <!-- END: Footer For Desktop and tab -->
+     @include('dashboard.includes.copyright')
+     
 
-      
+    
+    </div>
+   
   </main>
   <!-- scripts -->
 @include('dashboard.includes.footer')
+
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
 <script>
@@ -439,6 +390,7 @@ channel.bind('notify-event-{{auth()->user()->id}}', function(data) {
   toastr.success(data.message, 'Notification');
 });
 </script>
+
 <script>
         function updateClock() {
             const now = new Date();
@@ -455,4 +407,5 @@ channel.bind('notify-event-{{auth()->user()->id}}', function(data) {
         updateClock();
     </script>
 </body>
+
 </html>

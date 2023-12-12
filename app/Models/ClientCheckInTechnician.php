@@ -29,5 +29,9 @@ class ClientCheckInTechnician extends Model
     {
         return $this->belongsTo(Location::class, 'location_id', 'id');
     }
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class, 'client_check_in_id', 'client_check_in_id');
+    }
     
 }

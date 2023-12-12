@@ -49,13 +49,13 @@
 
 
 
-             
+              
               <!-- end top menu -->
               <div class="nav-tools flex items-center lg:space-x-5 space-x-3 rtl:space-x-reverse leading-0">
 
                 <!-- BEGIN: Language Dropdown  -->
 
-               
+                
                 <!-- Theme Changer -->
                 <!-- END: Language Dropdown -->
 
@@ -75,10 +75,52 @@
                     <iconify-icon class="text-slate-800 dark:text-white text-xl" icon="mdi:paint-outline"></iconify-icon>
                   </button>
                 </div>
-                <!-- END: gray-scale Dropdown -->
-
                
-                
+                <!-- BEGIN: Notification Dropdown -->
+                <!-- Notifications Dropdown area -->
+                <div class="relative md:block hidden">
+                  <button class="lg:h-[32px] lg:w-[32px] lg:bg-slate-100 lg:dark:bg-slate-900 dark:text-white text-slate-900 cursor-pointer
+      rounded-full text-[20px] flex flex-col items-center justify-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <iconify-icon class="animate-tada text-slate-800 dark:text-white text-xl" icon="heroicons-outline:bell"></iconify-icon>
+                    @if(isset($notifications_count) && $notifications_count > 0)
+                    <span class="absolute -right-1 lg:top-0 -top-[6px] h-4 w-4 bg-red-500 text-[8px] font-semibold flex flex-col items-center
+                        justify-center rounded-full text-white z-[99]">
+                      
+                        {{$notifications_count}}
+                      
+                      </span>
+                    @endif
+                  </button>
+                  <!-- Notifications Dropdown -->
+                  <div class="dropdown-menu z-10 hidden bg-white shadow w-[335px]
+      dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md overflow-hidden lrt:origin-top-right rtl:origin-top-left">
+               @if(isset($notifications_count) && $notifications_count > 0)
+                    <div class="flex items-center justify-between py-4 px-4">
+                      <h3 class="text-sm font-Inter font-medium text-slate-700 dark:text-white">Notifications</h3>
+                      <a class="text-xs font-Inter font-normal underline text-slate-500 dark:text-white" href="{{ route('markAllAsRead') }}">Mark as Read</a>
+                    </div>
+              @endif
+                    @foreach(auth()->user()->unreadNotifications as $notification)
+                    <div class="text-slate-600 dark:text-slate-300 block w-full px-4 py-2 text-sm">
+                      <div class="flex ltr:text-left rtl:text-right relative">
+                        <div class="flex-none ltr:mr-3 rtl:ml-3">
+                          <div class="h-8 w-8 bg-white rounded-full">
+                            <img src="{{asset('dashboard/assets/images/all-img/user3.png')}}" alt="user" class="border-transparent block w-full h-full object-cover rounded-full border">
+                          </div>
+                        </div>
+                        <div class="flex-1">
+                          <a href="#" class="text-slate-600 dark:text-slate-300 text-sm font-medium mb-1 before:w-full before:h-full before:absolute
+                                           before:top-0 before:left-0">
+                             {{$notification->data['message']}}👋</a>
+                          <!-- <div class="text-slate-600 dark:text-slate-300 text-xs leading-4">Won the monthly best seller badge</div> -->
+                          <div class="text-slate-400 dark:text-slate-400 text-xs mt-1">{{$notification->created_at->diffForHumans()}}</div>
+                        </div>
+                      </div>
+                    </div>
+                  @endforeach
+                  </div>
+                </div>
+                <!-- END: Notification Dropdown -->
 
                 <!-- BEGIN: Profile Dropdown -->
                 <!-- Profile DropDown Area -->
@@ -97,15 +139,9 @@
                   <div class="dropdown-menu z-10 hidden bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md
       overflow-hidden">
                     <ul class="py-1 text-sm text-slate-800 dark:text-slate-200">
-                    <li>
-                        <a href="{{route('owner.changePasswordPage')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
-            dark:text-white font-normal">
-                          <iconify-icon icon="heroicons-outline:credit-card" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
-                          <span class="font-Inter">Change Password</span>
-                        </a>
-                      </li>
+                    
                       <li>
-                        <a href="{{route('owner.logout')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+                        <a href="{{route('manager.logout')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
             dark:text-white font-normal">
                           <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
                           <span class="font-Inter">Logout</span>
@@ -126,7 +162,7 @@
         </div>
 
         <!-- BEGIN: Search Modal -->
-        <!-- <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal fade fixed top-0 left-0 hidden w-full h-full outline-none overflow-x-hidden overflow-y-auto" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
           <div class="modal-dialog relative w-auto pointer-events-none top-1/4">
             <div class="modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white dark:bg-slate-900 bg-clip-padding rounded-md outline-none text-current">
               <form>
@@ -139,7 +175,7 @@
               </form>
             </div>
           </div>
-        </div> -->
+        </div>
         <!-- END: Search Modal -->
         <!-- END: Header -->
         <!-- END: Header -->
@@ -156,114 +192,63 @@
                       <div class="card-body p-6">
                         <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
                           <div class="flex-1">
-                            <div class="card-title text-slate-900 dark:text-white">Manage Managers</div>
+                            <div class="card-title text-slate-900 dark:text-white">Notification</div>
                           </div>
-                          <div>
-                          <a href="{{route('owner.createManagerPage')}}">    
-                                      <button class="btn inline-flex justify-center btn-success btn-sm">
-                                    <span class="flex items-center">
-                                        <span>Create</span>
-                                    </span>
-                                  </button>  
-                              </a> 
-                              </div>
+                        <a href="{{route('markAllAsRead')}}"><button class="btn btn-dark">Mark All as Read</button></a>
+
+
                         </header>
                           <!-- BEGIN: Team Table -->
                         
 
-                          <div class="overflow-x-auto -mx-6">
+                          
+
+                         
+                           <div class="overflow-x-auto -mx-6">
                             <div class="inline-block min-w-full align-middle">
                               <div class="overflow-hidden ">
                                 <table class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700">
                                   <thead class=" bg-slate-200 dark:bg-slate-700">
-                           
-                          
-                           <tr>
+                                    <tr>
 
                                       <th scope="col" class=" table-th ">
-                                        Name
+                                       Notification
                                       </th>
-
                                       <th scope="col" class=" table-th ">
-                                        STATUS
+                                       Time
                                       </th>
-
-                                      <th scope="col" class=" table-th ">
-                                        Location
-                                      </th>
-
+                                    
                                      
 
-                                      <th scope="col" class=" table-th ">
-                                        ACTION
-                                      </th>
-
-                           </tr>
+                                    </tr>
                                   </thead>
                                   <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
-                                  @foreach($managers as $manager) 
-                                <tr>
+
+                                   
+                                  @foreach($notifications as $notification)
+                                    <tr>
+                                    
+                                     
                                       <td class="table-td">
-                                        <div class="flex items-center">
-                                          <div class="flex-none">
-                                            <div class="w-8 h-8 rounded-[100%] ltr:mr-3 rtl:ml-3">
-                                              <img src="{{asset('dashboard/assets/images/users/user-1.jpg')}}" alt="" class="w-full h-full rounded-[100%] object-cover">
-                                            </div>
-                                          </div>
-                                          <div class="flex-1 text-start">
-                                            <h4 class="text-sm font-medium text-slate-600 whitespace-nowrap">
-                                             {{$manager->name}}
-                                            </h4>
-                                          </div>
+                                        <div class="relative">
+                                        
+                                          <span class="text-md font-medium text-slate-900 dark:text-white">{{$notification->data['message']}}</span>                                
                                         </div>
                                       </td>
-                                      <td class="table-td ">
-                                        <span class="block min-w-[140px] text-left">
-                                    <span class="inline-block text-center mx-auto py-1">
-                                        
-                                            <span class="flex items-center space-x-3 rtl:space-x-reverse">
-                                                <span class="h-[6px] w-[6px] bg-danger-500 rounded-full inline-block ring-4 ring-opacity-30 ring-danger-500"></span>
-                                        <span>Active</span>
-                                        </span>
-
-                                      </td>
-                                      @foreach($manager->locations as $location)
-                                      
-                                      <td class="table-td">{{$location->location->name ?? 'N/A'}}</td>
-                                      
-                                      @endforeach
-                                      @if ($manager->locations->isEmpty())
-                                    <td class="table-td">Not assigned</td>
-                                      @endif
-                                      
                                       <td class="table-td">
-                                      <div class="relative flex">
-                                      <a href="{{ route('owner.editManagerPage', $manager->id) }}" class="mr-2">
-                                          <button class="btn inline-flex justify-center btn-secondary btn-sm">
-                                              <span class="flex items-center">
-                                                  <span>Edit</span>
-                                              </span>
-                                          </button>
-                                      </a>
-                                      <a href="{{ route('owner.deleteManager', $manager->id) }}">
-                                          <button class="btn inline-flex justify-center btn-danger btn-sm">
-                                              <span class="flex items-center">
-                                                  <span>Delete</span>
-                                              </span>
-                                          </button>
-                                      </a>
-                                  </div>
+                                        <div class="relative">
+                                          <span class="text-sm font-medium text-success-500">{{$notification->created_at->diffForHumans()}}</span>
+                                        </div>
+                                </tr>
+                                @endforeach
+                                 
 
-                                      </td>
-                               </tr>
-                            @endforeach
+                                   
+
                                   </tbody>
                                 </table>
-                                
                               </div>
-                              
                             </div>
-                           
                           </div>
                          
                           <!-- END: Team table -->
@@ -275,12 +260,12 @@
                 </div>
 
               </div>
-             
+              {{$notifications->links()}}
             </div>
           </div>
         </div>
       </div>
-      {{$managers->links()}}
+     
       <!-- BEGIN: Footer For Desktop and tab -->
     @include('dashboard.includes.copyright')
       <!-- END: Footer For Desktop and tab -->
@@ -297,7 +282,30 @@
   
   <!-- scripts -->
 @include('dashboard.includes.footer')
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
+<script>
+
+// Enable pusher logging - don't include this in production
+
+
+var pusher = new Pusher('2080c6dc08df5ed47ee1', {
+  cluster: 'mt1'
+});
+
+var audio = new Audio("{{asset('dashboard/assets/notification/notify.mp3')}}");
+
+var channel = pusher.subscribe('notify-channel-{{auth()->user()->id}}');
+channel.bind('notify-event-{{auth()->user()->id}}', function(data) {
+  audio.currentTime = 0;
+
+  // Play the audio
+  audio.play();
+
+            // Display notification using Toastr
+  toastr.success(data.message, 'Notification');
+});
+</script>
 </body>
 
 </html>

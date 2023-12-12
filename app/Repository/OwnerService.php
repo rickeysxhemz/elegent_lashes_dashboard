@@ -115,8 +115,8 @@ class OwnerService
             $query->with('location');
         }])->whereHas('roles', function ($query) {
             $query->where('name', 'manager');
-        })->paginate(10);
-        // dd($managers);
+        })->orderBy('created_at','desc')->paginate(10);
+        
         
         return view('dashboard.owner.manager', compact('managers'));
     }
@@ -124,14 +124,14 @@ class OwnerService
     {
         $technicians = User::with(['roles','technician_locations'])->whereHas('roles', function ($query) {
             $query->where('name', 'technician');
-        })->paginate(10);
+        })->orderBy('created_at','desc')->paginate(10);
         
         return view('dashboard.owner.technician',compact('technicians'));
     }
 
     public function manageLocation()
     {
-        $locations = Location::paginate(10);
+        $locations = Location::orderBy('created_at','desc')->paginate(10);
         return view('dashboard.owner.location',compact('locations'));
     }
 

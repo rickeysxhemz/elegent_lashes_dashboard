@@ -17,19 +17,19 @@
           <div class="app-header z-[999] ltr:ml-[248px] rtl:mr-[248px] bg-white dark:bg-slate-800 shadow-sm dark:shadow-slate-700">
             <div class="flex justify-between items-center h-full">
               <div class="flex items-center md:space-x-4 space-x-2 xl:space-x-0 rtl:space-x-reverse vertical-box">
-                <a href="index.html" class="mobile-logo xl:hidden inline-block">
-                  <img src="assets/images/logo/logo-c.svg" class="black_logo" alt="logo">
-                  <img src="assets/images/logo/logo-c-white.svg" class="white_logo" alt="logo">
+                <a href="" class="mobile-logo xl:hidden inline-block">
+                  <!-- <img src="assets/images/logo/logo-c.svg" class="black_logo" alt="logo">
+                  <img src="assets/images/logo/logo-c-white.svg" class="white_logo" alt="logo"> -->
                 </a>
                 <button class="smallDeviceMenuController hidden md:inline-block xl:hidden">
                   <iconify-icon class="leading-none bg-transparent relative text-xl top-[2px] text-slate-900 dark:text-white" icon="heroicons-outline:menu-alt-3"></iconify-icon>
                 </button>
-                <button class="flex items-center xl:text-sm text-lg xl:text-slate-400 text-slate-800 dark:text-slate-300 px-1
+                <!-- <button class="flex items-center xl:text-sm text-lg xl:text-slate-400 text-slate-800 dark:text-slate-300 px-1
         rtl:space-x-reverse search-modal" data-bs-toggle="modal" data-bs-target="#searchModal">
                   <iconify-icon icon="heroicons-outline:search"></iconify-icon>
                   <span class="xl:inline-block hidden ml-3">Search...
     </span>
-                </button>
+                </button> -->
 
               </div>
               <!-- end vertcial -->
@@ -259,15 +259,24 @@
                     <div class="xl:col-span-4 col-span-12">
                       <div class="card">
                         <div class="card-header">
-                          <h4 class="card-title">Notes</h4>
+                          <h4 class="card-title">Clock</h4>
                         </div>
                         <div class="card-body p-6">
                           <div class="mb-12">
-                            <div id="dashcode-mini-calendar"></div>
+                          <div class="datetime-container" style="text-align:center">
+                                <div class="date" style="font-size: 24px;color: #333;">@php echo now('America/New_York')->format('D, M j, Y'); @endphp</div>
+                                <div class="time" style="font-size: 36px;color: #1e90ff;" id="clock"></div>
+                            </div>
                           </div>
 
                           
                         </div>
+                        <div class="card-header">
+                          <h4 class="card-title">Last Appointment</h4>
+                        </div>
+                        <div class="card-body p-6">
+                      <h6 style="color:green">{{$last_apointment->diffForHumans() ?? 'No Appointment Yet'}} </h6>  
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -305,10 +314,11 @@
                                   <thead class=" bg-slate-200 dark:bg-slate-700">
                                     <tr>
 
+                                    
+                                      
                                       <th scope="col" class=" table-th ">
-                                        ASSIGNEE
+                                        Client
                                       </th>
-
                                       <th scope="col" class=" table-th ">
                                         STATUS
                                       </th>
@@ -317,10 +327,7 @@
                                         TIME
                                       </th>
 
-                                      <th scope="col" class=" table-th ">
-                                        CHART
-                                      </th>
-
+                                     
                                       <th scope="col" class=" table-th ">
                                         ACTION
                                       </th>
@@ -333,20 +340,7 @@
                                   @foreach($technician_assigned_tasks as $technician_assigned_task)
                                     <tr>
                                     
-                                    <td class="table-td">
-                                        <div class="flex items-center">
-                                          <div class="flex-none">
-                                            <div class="w-8 h-8 rounded-[100%] ltr:mr-3 rtl:ml-3">
-                                              <img src="{{asset('dashboard/assets/images/users/user-2.jpg')}}" alt="" class="w-full h-full rounded-[100%] object-cover">
-                                            </div>
-                                          </div>
-                                          <div class="flex-1 text-start">
-                                            <h4 class="text-sm font-medium text-slate-600 whitespace-nowrap">
-                                             {{$technician_assigned_task->manager->name}}
-                                            </h4>
-                                          </div>
-                                        </div>
-                                      </td>
+                                   
 
                                     <td class="table-td">
                                         <div class="flex items-center">
@@ -387,7 +381,7 @@
                                       
                                       <td class="table-td">
                                         <div class="relative">
-                                        @if($technician_assigned_task->status == 'pending')
+                                  @if($technician_assigned_task->status == 'pending')
                                         <a href="{{route('technician.addPayments',$technician_assigned_task->client_check_in_id)}}">
                                         <button class="btn inline-flex justify-center btn-danger btn-sm">
                                     <span class="flex items-center">
@@ -435,47 +429,9 @@
 
       <!-- BEGIN: Footer For Desktop and tab -->
      @include('dashboard.includes.copyright')
-      <!-- END: Footer For Desktop and tab -->
+     
 
-      <div class="bg-white bg-no-repeat custom-dropshadow footer-bg dark:bg-slate-700 flex justify-around items-center
-    backdrop-filter backdrop-blur-[40px] fixed left-0 bottom-0 w-full z-[9999] bothrefm-0 py-[12px] px-4 md:hidden">
-        <a href="chat.html">
-          <div>
-            <span class="relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
-          text-slate-900 ">
-        <iconify-icon icon="heroicons-outline:mail"></iconify-icon>
-        <span class="absolute right-[5px] lg:hrefp-0 -hrefp-2 h-4 w-4 bg-red-500 text-[8px] font-semibold flex flex-col items-center
-            justify-center rounded-full text-white z-[99]">
-          10
-        </span>
-            </span>
-            <span class="block text-[11px] text-slate-600 dark:text-slate-300">
-        Messages
-      </span>
-          </div>
-        </a>
-        <a href="profile.html" class="relative bg-white bg-no-repeat backdrop-filter backdrop-blur-[40px] rounded-full footer-bg dark:bg-slate-700
-      h-[65px] w-[65px] z-[-1] -mt-[40px] flex justify-center items-center">
-          <div class="h-[50px] w-[50px] rounded-full relative left-[0px] hrefp-[0px] custom-dropshadow">
-            <img src="assets/images/users/user-1.jpg" alt="" class="w-full h-full rounded-full border-2 border-slate-100">
-          </div>
-        </a>
-        <a href="#">
-          <div>
-            <span class=" relative cursor-pointer rounded-full text-[20px] flex flex-col items-center justify-center mb-1 dark:text-white
-          text-slate-900">
-        <iconify-icon icon="heroicons-outline:bell"></iconify-icon>
-        <span class="absolute right-[17px] lg:hrefp-0 -hrefp-2 h-4 w-4 bg-red-500 text-[8px] font-semibold flex flex-col items-center
-            justify-center rounded-full text-white z-[99]">
-          2
-        </span>
-            </span>
-            <span class=" block text-[11px] text-slate-600 dark:text-slate-300">
-        Notifications
-      </span>
-          </div>
-        </a>
-      </div>
+    
     </div>
    
   </main>
@@ -506,6 +462,22 @@ channel.bind('notify-event-{{auth()->user()->id}}', function(data) {
   toastr.success(data.message, 'Notification');
 });
 </script>
+
+<script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // Update the clock every second
+        setInterval(updateClock, 1000);
+
+        // Initial update
+        updateClock();
+    </script>
 </body>
 
 </html>

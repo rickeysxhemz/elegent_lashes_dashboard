@@ -14,18 +14,18 @@
             <div class="flex justify-between items-center h-full">
               <div class="flex items-center md:space-x-4 space-x-2 xl:space-x-0 rtl:space-x-reverse vertical-box">
                 <a href="index.html" class="mobile-logo xl:hidden inline-block">
-                  <img src="assets/images/logo/logo-c.svg" class="black_logo" alt="logo">
-                  <img src="assets/images/logo/logo-c-white.svg" class="white_logo" alt="logo">
+                  <!-- <img src="assets/images/logo/logo-c.svg" class="black_logo" alt="logo">
+                  <img src="assets/images/logo/logo-c-white.svg" class="white_logo" alt="logo"> -->
                 </a>
                 <button class="smallDeviceMenuController hidden md:inline-block xl:hidden">
                   <iconify-icon class="leading-none bg-transparent relative text-xl top-[2px] text-slate-900 dark:text-white" icon="heroicons-outline:menu-alt-3"></iconify-icon>
                 </button>
-                <button class="flex items-center xl:text-sm text-lg xl:text-slate-400 text-slate-800 dark:text-slate-300 px-1
+                <!-- <button class="flex items-center xl:text-sm text-lg xl:text-slate-400 text-slate-800 dark:text-slate-300 px-1
                      rtl:space-x-reverse search-modal" data-bs-toggle="modal" data-bs-target="#searchModal">
                   <iconify-icon icon="heroicons-outline:search"></iconify-icon>
                   <span class="xl:inline-block hidden ml-3">Search...
                   </span>
-                </button>
+                </button> -->
 
               </div>
               <!-- end vertcial -->
@@ -49,84 +49,13 @@
 
 
 
-              <div class="main-menu">
-                <ul>
-
-                  <li class="menu-item-has-children ">
-                
-
-
-                    <a href="javascript:void()">
-                      <div class="flex flex-1 items-center space-x-[6px] rtl:space-x-reverse">
-                        <span class="icon-box">
-                    <iconify-icon icon=heroicons-outline:home > </iconify-icon>
-                  </span>
-                        <div class="text-box">Dashboard</div>
-                      </div>
-                      <div class="flex-none text-sm ltr:ml-3 rtl:mr-3 leading-[1] relative top-1">
-                        <!-- <iconify-icon icon="heroicons-outline:chevron-down"> </iconify-icon> -->
-                      </div>
-                    </a>
-                  
-                  </li>
-                  <li class="sidebar-menu-title">USERS</li>
-                        <li>
-                 <a href="chat.html" class="navItem">
-                 <span class="flex items-center">
-                 <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
-                 <span>Manage Manager</span>
-                 </span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="chat.html" class="navItem">
-                            <span class="flex items-center">
-                          <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
-                          <span>Manage technician</span>
-                            </span>
-                          </a>
-                        </li>
-
-                 
-
-
-                 
-
-                </ul>
-              </div>
+             
               <!-- end top menu -->
               <div class="nav-tools flex items-center lg:space-x-5 space-x-3 rtl:space-x-reverse leading-0">
 
                 <!-- BEGIN: Language Dropdown  -->
 
-                <div class="relative">
-                  <button class="text-slate-800 dark:text-white focus:ring-0 focus:outline-none font-medium rounded-lg text-sm text-center
-            inline-flex items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <iconify-icon icon="circle-flags:uk" class="mr-0 md:mr-2 rtl:ml-2 text-xl"></iconify-icon>
-                    <span class="text-sm md:block hidden font-medium text-slate-600 dark:text-slate-300">
-            En</span>
-                  </button>
-                  <!-- Language Dropdown menu -->
-                  <div class="dropdown-menu z-10 hidden bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 border dark:border-slate-900 !top-[25px] rounded-md
-            overflow-hidden">
-                    <ul class="py-1 text-sm text-slate-800 dark:text-slate-200">
-                      <li>
-                        <a href="#" class="flex items-center px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white">
-                          <iconify-icon icon="circle-flags:uk" class="ltr:mr-2 rtl:ml-2 text-xl"></iconify-icon>
-                          <span class="font-medium">ENG</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#" class="flex items-center px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white">
-                          <iconify-icon icon="emojione:flag-for-germany" class="ltr:mr-2 rtl:ml-2 text-xl"></iconify-icon>
-                          <span class="font-medium">GER</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <!-- Theme Changer -->
-                <!-- END: Language Dropdown -->
+              
 
                 <!-- BEGIN: Toggle Theme -->
                 <div>
@@ -145,191 +74,50 @@
                   </button>
                 </div>
                 <!-- END: gray-scale Dropdown -->
-
-                <!-- BEGIN: Message Dropdown -->
-                <!-- Mail Dropdown -->
-                <div class="relative md:block hidden">
-                  <button class="lg:h-[32px] lg:w-[32px] lg:bg-slate-100 lg:dark:bg-slate-900 dark:text-white text-slate-900 cursor-pointer
-      rounded-full text-[20px] flex flex-col items-center justify-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <iconify-icon class="text-slate-800 dark:text-white text-xl" icon="heroicons-outline:mail"></iconify-icon>
-                    <span class="absolute -right-1 lg:top-0 -top-[6px] h-4 w-4 bg-red-500 text-[8px] font-semibold flex flex-col items-center
-        justify-center rounded-full text-white z-[45]">
-      10</span>
-                  </button>
-                  <!-- Mail Dropdown -->
-                  <div class="dropdown-menu z-10 hidden bg-white divide-y divide-slate-100 dark:divide-slate-700 shadow w-[335px]
-      dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md overflow-hidden lrt:origin-top-right rtl:origin-top-left">
-                    <div class="flex items-center justify-between py-4 px-4">
-                      <h3 class="text-sm font-Inter font-medium text-slate-700 dark:text-white">Messages</h3>
-                      <a class="text-xs font-Inter font-normal underline text-slate-500 dark:text-white" href="#">See All</a>
-                    </div>
-                    <div class="divide-y divide-slate-100 dark:divide-slate-700" role="none">
-                      <div class="text-slate-600 dark:text-slate-300 block w-full px-4 py-2 text-sm">
-                        <div class="flex ltr:text-left rtl:text-right space-x-3 rtl:space-x-reverse relative">
-                          <div class="flex-none">
-                            <div class="h-8 w-8 bg-white dark:bg-slate-700 rounded-full relative">
-                              <span class="bg-secondary-500 w-[10px] h-[10px] rounded-full border border-white dark:border-slate-700 inline-block absolute
-                right-0 top-0"></span>
-                              <img src="/assets/images/all-img/user.png" alt="user" class="block w-full h-full object-cover rounded-full border hover:border-white border-transparent">
-                            </div>
-                          </div>
-                          <div class="flex-1">
-                            <a href="#" class="text-slate-800 dark:text-slate-300 text-sm font-medium mb-1 before:w-full before:h-full before:absolute
-                before:top-0 before:left-0">
-                              Wade Warren</a>
-                            <div class="text-xs hover:text-[#68768A] text-slate-600 dark:text-slate-300 mb-1">Hi! How are you doing?.....</div>
-                            <div class="text-slate-400 dark:text-slate-400 text-xs">
-                              3 min ago</div>
-                          </div>
-                          <div class="flex-0">
-                            <span class="h-4 w-4 bg-danger-500 border border-white rounded-full text-[10px] flex items-center justify-center text-white">
-              1</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="text-slate-600 dark:text-slate-300 block w-full px-4 py-2 text-sm  cursor-pointer">
-                        <div class="flex ltr:text-left rtl:text-right space-x-3 rtl:space-x-reverse relative">
-                          <div class="flex-none">
-                            <div class="h-8 w-8 bg-white dark:bg-slate-700 rounded-full relative">
-                              <span class="bg-green-500 w-[10px] h-[10px] rounded-full border border-white dark:border-slate-700 inline-block absolute
-                right-0 top-0"></span>
-                              <img src="/assets/images/all-img/user2.png" alt="user" class="block w-full h-full object-cover rounded-full border hover:border-white border-transparent">
-                            </div>
-                          </div>
-                          <div class="flex-1">
-                            <a href="#" class="text-slate-800 dark:text-slate-300 text-sm font-medium mb-1 before:w-full before:h-full before:absolute
-                before:top-0 before:left-0">
-                              Savannah Nguyen</a>
-                            <div class="text-xs hover:text-[#68768A] text-slate-600 dark:text-slate-300 mb-1">Hi! How are you doing?.....</div>
-                            <div class="text-slate-400 dark:text-slate-400 text-xs">3 min ago
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="text-slate-600 dark:text-slate-300 block w-full px-4 py-2 text-sm  cursor-pointer">
-                        <div class="flex ltr:text-left rtl:text-right space-x-3 rtl:space-x-reverse relative">
-                          <div class="flex-none">
-                            <div class="h-8 w-8 bg-white dark:bg-slate-700 rounded-full relative">
-                              <span class="bg-green-500 w-[10px] h-[10px] rounded-full border border-white dark:border-slate-700 inline-block absolute
-                right-0 top-0"></span>
-                              <img src="/assets/images/all-img/user3.png" alt="user" class="block w-full h-full object-cover rounded-full border hover:border-white border-transparent">
-                            </div>
-                          </div>
-                          <div class="flex-1">
-                            <a href="#" class="text-slate-800 dark:text-slate-300 text-sm font-medium mb-1 before:w-full before:h-full before:absolute
-                before:top-0 before:left-0">
-                              Ralph Edwards</a>
-                            <div class="text-xs hover:text-[#68768A] text-slate-600 dark:text-slate-300 mb-1">Hi! How are you doing?.....</div>
-                            <div class="text-slate-400 dark:text-slate-400 text-xs">
-                              3 min ago
-                            </div>
-                          </div>
-                          <div class="flex-0">
-                            <span class="h-4 w-4 bg-danger-500 border border-white rounded-full text-[10px] flex items-center justify-center text-white">
-              8</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- END: Message Dropdown -->
-
-                <!-- BEGIN: Notification Dropdown -->
-                <!-- Notifications Dropdown area -->
                 <div class="relative md:block hidden">
                   <button class="lg:h-[32px] lg:w-[32px] lg:bg-slate-100 lg:dark:bg-slate-900 dark:text-white text-slate-900 cursor-pointer
       rounded-full text-[20px] flex flex-col items-center justify-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <iconify-icon class="animate-tada text-slate-800 dark:text-white text-xl" icon="heroicons-outline:bell"></iconify-icon>
+                    @if(auth()->user()->unreadNotifications->count() > 0)
                     <span class="absolute -right-1 lg:top-0 -top-[6px] h-4 w-4 bg-red-500 text-[8px] font-semibold flex flex-col items-center
-        justify-center rounded-full text-white z-[99]">
-      4</span>
+                        justify-center rounded-full text-white z-[99]">
+                      
+                        {{auth()->user()->unreadNotifications->count()}}
+                      
+                      </span>
+                    @endif
                   </button>
                   <!-- Notifications Dropdown -->
                   <div class="dropdown-menu z-10 hidden bg-white shadow w-[335px]
       dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md overflow-hidden lrt:origin-top-right rtl:origin-top-left">
+               @if(auth()->user()->unreadNotifications->count() > 0)
                     <div class="flex items-center justify-between py-4 px-4">
                       <h3 class="text-sm font-Inter font-medium text-slate-700 dark:text-white">Notifications</h3>
-                      <a class="text-xs font-Inter font-normal underline text-slate-500 dark:text-white" href="#">See All</a>
+                      <a class="text-xs font-Inter font-normal underline text-slate-500 dark:text-white" href="{{ route('markAllAsRead') }}">Mark as Read</a>
                     </div>
-                    <div class="" role="none">
-                      <div class="bg-slate-100 dark:bg-slate-700 dark:bg-opacity-70 text-slate-800 block w-full px-4 py-2 text-sm relative">
-                        <div class="flex ltr:text-left rtl:text-right">
-                          <div class="flex-none ltr:mr-3 rtl:ml-3">
-                            <div class="h-8 w-8 bg-white rounded-full">
-                              <img src="/assets/images/all-img/user.png" alt="user" class="border-white block w-full h-full object-cover rounded-full border">
-                            </div>
-                          </div>
-                          <div class="flex-1">
-                            <a href="#" class="text-slate-600 dark:text-slate-300 text-sm font-medium mb-1 before:w-full before:h-full before:absolute
-                before:top-0 before:left-0">
-                              Your order is placed</a>
-                            <div class="text-slate-500 dark:text-slate-200 text-xs leading-4">Amet minim mollit non deser unt ullamco est sit
-                              aliqua.</div>
-                            <div class="text-slate-400 dark:text-slate-400 text-xs mt-1">
-                              3 min ago
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="text-slate-600 dark:text-slate-300 block w-full px-4 py-2 text-sm">
-                        <div class="flex ltr:text-left rtl:text-right relative">
-                          <div class="flex-none ltr:mr-3 rtl:ml-3">
-                            <div class="h-8 w-8 bg-white rounded-full">
-                              <img src="/assets/images/all-img/user2.png" alt="user" class="border-transparent block w-full h-full object-cover rounded-full border">
-                            </div>
-                          </div>
-                          <div class="flex-1">
-                            <a href="#" class="text-slate-600 dark:text-slate-300 text-sm font-medium mb-1 before:w-full before:h-full before:absolute
-                before:top-0 before:left-0">
-                              Congratulations Darlene 🎉</a>
-                            <div class="text-slate-600 dark:text-slate-300 text-xs leading-4">Won the monthly best seller badge</div>
-                            3 min ago
-                          </div>
-                        </div>
-                        <div class="flex-0">
-                          <span class="h-[10px] w-[10px] bg-danger-500 border border-white dark:border-slate-400 rounded-full inline-block"></span>
-                        </div>
-                      </div>
-                    </div>
+              @endif
+                    @foreach(auth()->user()->unreadNotifications as $notification)
                     <div class="text-slate-600 dark:text-slate-300 block w-full px-4 py-2 text-sm">
                       <div class="flex ltr:text-left rtl:text-right relative">
                         <div class="flex-none ltr:mr-3 rtl:ml-3">
                           <div class="h-8 w-8 bg-white rounded-full">
-                            <img src="/assets/images/all-img/user3.png" alt="user" class="border-transparent block w-full h-full object-cover rounded-full border">
+                            <img src="{{asset('dashboard/assets/images/all-img/user3.png')}}" alt="user" class="border-transparent block w-full h-full object-cover rounded-full border">
                           </div>
                         </div>
                         <div class="flex-1">
                           <a href="#" class="text-slate-600 dark:text-slate-300 text-sm font-medium mb-1 before:w-full before:h-full before:absolute
-              before:top-0 before:left-0">
-                            Revised Order 👋</a>
-                          <div class="text-slate-600 dark:text-slate-300 text-xs leading-4">Won the monthly best seller badge</div>
-                          <div class="text-slate-400 dark:text-slate-400 text-xs mt-1">3 min ago</div>
+                                           before:top-0 before:left-0">
+                             {{$notification->data['message']}}👋</a>
+                          <!-- <div class="text-slate-600 dark:text-slate-300 text-xs leading-4">Won the monthly best seller badge</div> -->
+                          <div class="text-slate-400 dark:text-slate-400 text-xs mt-1">{{$notification->created_at->diffForHumans()}}</div>
                         </div>
                       </div>
                     </div>
-                    <div class="text-slate-600 dark:text-slate-300 block w-full px-4 py-2 text-sm">
-                      <div class="flex ltr:text-left rtl:text-right relative">
-                        <div class="flex-none ltr:mr-3 rtl:ml-3">
-                          <div class="h-8 w-8 bg-white rounded-full">
-                            <img src="/assets/images/all-img/user4.png" alt="user" class="border-transparent block w-full h-full object-cover rounded-full border">
-                          </div>
-                        </div>
-                        <div class="flex-1">
-                          <a href="#" class="text-slate-600 dark:text-slate-300 text-sm font-medium mb-1 before:w-full before:h-full before:absolute
-              before:top-0 before:left-0">
-                            Brooklyn Simmons</a>
-                          <div class="text-slate-600 dark:text-slate-300 text-xs leading-4">Added you to Top Secret Project group...</div>
-                          <div class="text-slate-400 dark:text-slate-400 text-xs mt-1">
-                            3 min ago
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  @endforeach
                   </div>
                 </div>
                 <!-- END: Notification Dropdown -->
-
+              
                 <!-- BEGIN: Profile Dropdown -->
                 <!-- Profile DropDown Area -->
                 <div class="md:block hidden w-full">
@@ -391,8 +179,131 @@
           <div class="page-content">
             <div class="transition-all duration-150 container-fluid" id="page_layout">
               <div id="content_layout">
-
+              <div class="flex justify-between flex-wrap items-center mb-6">
+              @if(isset($last_appointment) && isset($checkIn))
+                    <h4 class="font-medium lg:text-2xl text-xl capitalize text-danger-900 inline-block ltr:pr-4 rtl:pl-4 mb-1 sm:mb-0">Last Appointment Payment</h4>
+              @else
+              <h4 class="font-medium lg:text-2xl text-xl capitalize text-danger-900 inline-block ltr:pr-4 rtl:pl-4 mb-1 sm:mb-0">No Previous Payment Yet!</h4>
+              @endif     
+            </div>
                 <div class="space-y-5">
+
+                    @if(isset($last_appointment) && isset($checkIn))
+                    <div class="card p-6">
+                          <div class="grid xl:grid-cols-4 lg:grid-cols-2 col-span-1 gap-3">
+
+                            <!-- BEGIN: Group Chart4 -->
+
+
+                            <div class="bg-warning-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-25 relative z-[1]">
+                              <div class="overlay absolute left-0 top-0 w-full h-full z-[-1]">
+                                <img src="{{asset('dashboard/assets/images/all-img/shade-1.png')}}" alt="" draggable="false" class="w-full h-full object-contain">
+                              </div>
+                              <span class="block mb-6 text-sm text-slate-900 dark:text-white font-medium">
+                                  Payment Method
+                              </span>
+                              <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium mb-6">
+                                  @if($last_appointment[0]['payment']['payment_method'] == 'cash')
+                                  Cash
+                                  @else
+                                  Card
+                                  @endif
+                              </span>
+                              <div class="flex space-x-2 rtl:space-x-reverse">
+                                <div class="flex-none text-xl  text-primary-500">
+                                  <iconify-icon icon="heroicons:arrow-trending-up"></iconify-icon>
+                                </div>
+                                <div class="flex-1 text-sm">
+                                  <!-- <span class="block mb-[2px] text-primary-500">
+                                      25.67% 
+                                  </span> -->
+                                  <span class="block mb-1 text-slate-600 dark:text-slate-300">
+                                  {{\Carbon\Carbon::parse($last_appointment[0]['payment']['updated_at'])->diffForHumans()}}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="bg-info-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-25 relative z-[1]">
+                              <div class="overlay absolute left-0 top-0 w-full h-full z-[-1]">
+                                <img src="{{asset('dashboard/assets/images/all-img/shade-2.png')}}" alt="" draggable="false" class="w-full h-full object-contain">
+                              </div>
+                              <span class="block mb-6 text-sm text-slate-900 dark:text-white font-medium">
+                                Payment Amount
+                              </span>
+                              <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium mb-6">
+                              ${{$last_appointment[0]['payment']['payment_amount']}}
+                              </span>
+                              <div class="flex space-x-2 rtl:space-x-reverse">
+                                <div class="flex-none text-xl  text-primary-500">
+                                  <iconify-icon icon="heroicons:arrow-trending-up"></iconify-icon>
+                                </div>
+                                <div class="flex-1 text-sm">
+                                  <!-- <span class="block mb-[2px] text-primary-500">
+                                      8.67%
+                                  </span> -->
+                                  <span class="block mb-1 text-slate-600 dark:text-slate-300">
+                                  {{\Carbon\Carbon::parse($last_appointment[0]['payment']['updated_at'])->diffForHumans()}}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="bg-primary-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-25 relative z-[1]">
+                              <div class="overlay absolute left-0 top-0 w-full h-full z-[-1]">
+                                <img src="{{asset('dashboard/assets/images/all-img/shade-3.png')}}" alt="" draggable="false" class="w-full h-full object-contain">
+                              </div>
+                              <span class="block mb-6 text-sm text-slate-900 dark:text-white font-medium">
+                                    Tips
+                                </span>
+                              <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium mb-6">
+                              ${{$last_appointment[0]['payment']['tips']}}
+                              </span>
+                              <div class="flex space-x-2 rtl:space-x-reverse">
+                                <div class="flex-none text-xl  text-success-500">
+                                  <iconify-icon icon="heroicons:arrow-trending-up"></iconify-icon>
+                                </div>
+                                <div class="flex-1 text-sm">
+                                  <!-- <span class="block mb-[2px] text-danger-500">
+                                      1.67%  
+                                </span> -->
+                                  <span class="block mb-1 text-slate-600 dark:text-slate-300">
+                                  {{\Carbon\Carbon::parse($last_appointment[0]['payment']['updated_at'])->diffForHumans()}}
+                                </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="bg-success-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-25 relative z-[1]">
+                              <div class="overlay absolute left-0 top-0 w-full h-full z-[-1]">
+                                <img src="{{asset('dashboard/assets/images/all-img/shade-4.png')}}" alt="" draggable="false" class="w-full h-full object-contain">
+                              </div>
+                              <span class="block mb-6 text-sm text-slate-900 dark:text-white font-medium">
+                                        Total Payment
+                              </span>
+                              <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium mb-6">
+                             ${{$last_appointment[0]['payment']['payment_total']}}
+                              </span>
+                              <div class="flex space-x-2 rtl:space-x-reverse">
+                                <div class="flex-none text-xl  text-primary-500">
+                                  <iconify-icon icon="heroicons:arrow-trending-up"></iconify-icon>
+                                </div>
+                                <div class="flex-1 text-sm">
+                                  <!-- <span class="block mb-[2px] text-primary-500">
+                                    11.67%  
+                                </span> -->
+                                  <span class="block mb-1 text-slate-600 dark:text-slate-300">
+                                  {{\Carbon\Carbon::parse($last_appointment[0]['payment']['updated_at'])->diffForHumans()}}
+                                </span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- END: Group Chart3 -->
+                          </div>
+                        </div>
+
+                @endif
                  
                 <div class="card xl:col-span-2">
                         <div class="card-body flex flex-col p-6">
@@ -414,11 +325,23 @@
                                  </div>
 
                                  <div class="input-area">
+                                      <label for="services" class="form-label">Service</label>
+                                      <select id="services" name="service_id" class="form-control">
+                                      @foreach($services as $service)
+                                      <option value="{{$service->id}}" class="dark:bg-slate-700">{{$service->name}}</option>
+                                      @endforeach                              
+                                      </select>
+
+                                      @error('service_id')
+                                          <span class="text-red-500 text-sm">{{ $message }}</span>
+                                      @enderror
+                                  </div>  
+                                 <div class="input-area">
                                       <label for="payment_method" class="form-label">Payment Method</label>
                                       <select id="payment_method" name="payment_method" class="form-control">
                                       <option value="cash" class="dark:bg-slate-700">Cash</option>
-                                      <option value="debit" class="dark:bg-slate-700">debit Card</option> 
-                                      <option value="credit" class="dark:bg-slate-700">credit Card</option>                                      
+                                      <option value="debit" class="dark:bg-slate-700">Card</option> 
+                                                                            
                                       </select>
 
                                       @error('payment_method')

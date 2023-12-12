@@ -2,8 +2,8 @@
       <div id="bodyOverlay" class="w-screen h-screen fixed top-0 bg-slate-900 bg-opacity-50 backdrop-blur-sm z-10 hidden"></div>
       <div class="logo-segment">
         <a class="flex items-center" href="index.html">
-          <img src="{{asset('dashboard/assets/images/logo/logo-c.svg')}}" class="black_logo" alt="logo">
-          <img src="{{asset('dashboard/assets/images/logo/logo-c-white.svg')}}" class="white_logo" alt="logo">
+          <!-- <img src="{{asset('dashboard/assets/images/logo/logo-c.svg')}}" class="black_logo" alt="logo">
+          <img src="{{asset('dashboard/assets/images/logo/logo-c-white.svg')}}" class="white_logo" alt="logo"> -->
           <span class="ltr:ml-3 rtl:mr-3 text-xl font-Inter font-bold text-slate-900 dark:text-white">Elegent Lashes</span>
         </a>
         <!-- Sidebar Type Button -->
@@ -74,14 +74,7 @@
             </a>
           </li>
          
-          <li>
-            <a href="{{route('owner.listCheckins')}}" class="navItem">
-              <span class="flex items-center">
-            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
-            <span>Assign Technician</span>
-              </span>
-            </a>
-          </li>
+         
           <li class="sidebar-menu-title">Payments</li>
           <li>
             <a href="{{route('owner.listPayments')}}" class="navItem">
@@ -99,14 +92,14 @@
               </span>
             </a>
           </li>
-          <li>
+          <!-- <li>
             <a href="{{route('owner.technicianPayment')}}" class="navItem">
               <span class="flex items-center">
             <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
             <span>Technician Payroll</span>
               </span>
             </a>
-          </li>
+          </li> -->
           <li class="sidebar-menu-title">Waivers</li>
           <li>
             <a href="{{route('owner.listWaivers')}}" class="navItem">
@@ -116,7 +109,15 @@
               </span>
             </a>
           </li>
-         
+          <li class="sidebar-menu-title">Logout</li>
+          <li>
+            <a href="{{route('owner.logout')}}" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
+            <span>Logout</span>
+              </span>
+            </a>
+          </li>
         </ul>
       @endif
       @if(auth()->user()->hasRole('manager'))
@@ -158,6 +159,23 @@
               </span>
             </a>
           </li>
+          <li class="sidebar-menu-title">Others</li>
+          <li>
+            <a href="{{route('notifications.manager')}}" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
+            <span>Notifications</span>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="{{route('manager.logout')}}" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
+            <span>Logout</span>
+              </span>
+            </a>
+          </li>
       @endif
       @if(auth()->user()->hasRole('technician'))
       <ul class="sidebar-menu">
@@ -170,15 +188,32 @@
               </span>     
             </a>
           </li>
-          <!-- <li class="sidebar-menu-title">Payments</li>
+          <li class="sidebar-menu-title">Payments</li>
+          <li class="">
+            <a href="{{route('technician.listPayments')}}" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class=" nav-icon" icon="heroicons-outline:home"></iconify-icon>
+            <span>Today Payments</span>
+              </span>     
+            </a>
+          </li>
+          <li class="sidebar-menu-title">Others</li>
           <li>
-            <a href="{{route('owner.listCheckins')}}" class="navItem">
+            <a href="{{route('notifications.manager')}}" class="navItem">
               <span class="flex items-center">
             <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
-            <span>Add Payment</span>
+            <span>Notifications</span>
               </span>
             </a>
-          </li> -->
+          </li>
+          <li>
+            <a href="{{route('technician.logout')}}" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
+            <span>Logout</span>
+              </span>
+            </a>
+          </li>
 
       @endif
 

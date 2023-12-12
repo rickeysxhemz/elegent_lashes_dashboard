@@ -14,8 +14,8 @@
             <div class="flex justify-between items-center h-full">
               <div class="flex items-center md:space-x-4 space-x-2 xl:space-x-0 rtl:space-x-reverse vertical-box">
                 <a href="index.html" class="mobile-logo xl:hidden inline-block">
-                  <img src="assets/images/logo/logo-c.svg" class="black_logo" alt="logo">
-                  <img src="assets/images/logo/logo-c-white.svg" class="white_logo" alt="logo">
+                  <!-- <img src="assets/images/logo/logo-c.svg" class="black_logo" alt="logo">
+                  <img src="assets/images/logo/logo-c-white.svg" class="white_logo" alt="logo"> -->
                 </a>
                 <button class="smallDeviceMenuController hidden md:inline-block xl:hidden">
                   <iconify-icon class="leading-none bg-transparent relative text-xl top-[2px] text-slate-900 dark:text-white" icon="heroicons-outline:menu-alt-3"></iconify-icon>
@@ -45,10 +45,20 @@
                 </button>
 
               </div>
+              <!-- end horizental -->
+
+
+
               
+              
+              <!-- end top menu -->
               <div class="nav-tools flex items-center lg:space-x-5 space-x-3 rtl:space-x-reverse leading-0">
 
-             
+                <!-- BEGIN: Language Dropdown  -->
+
+              
+                <!-- Theme Changer -->
+                <!-- END: Language Dropdown -->
 
                 <!-- BEGIN: Toggle Theme -->
                 <div>
@@ -68,18 +78,19 @@
                 </div>
                 <!-- END: gray-scale Dropdown -->
 
-              
+                <!-- BEGIN: Message Dropdown -->
+               
 
                 <!-- BEGIN: Notification Dropdown -->
                 <div class="relative md:block hidden">
                   <button class="lg:h-[32px] lg:w-[32px] lg:bg-slate-100 lg:dark:bg-slate-900 dark:text-white text-slate-900 cursor-pointer
       rounded-full text-[20px] flex flex-col items-center justify-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <iconify-icon class="animate-tada text-slate-800 dark:text-white text-xl" icon="heroicons-outline:bell"></iconify-icon>
-                    @if(isset($notifications_count) && $notifications_count > 0)
+                    @if(auth()->user()->unreadNotifications->count() > 0)
                     <span class="absolute -right-1 lg:top-0 -top-[6px] h-4 w-4 bg-red-500 text-[8px] font-semibold flex flex-col items-center
                         justify-center rounded-full text-white z-[99]">
                       
-                        {{$notifications_count}}
+                        {{auth()->user()->unreadNotifications->count()}}
                       
                       </span>
                     @endif
@@ -87,7 +98,7 @@
                   <!-- Notifications Dropdown -->
                   <div class="dropdown-menu z-10 hidden bg-white shadow w-[335px]
       dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md overflow-hidden lrt:origin-top-right rtl:origin-top-left">
-               @if(isset($notifications_count) && $notifications_count > 0)
+               @if(auth()->user()->unreadNotifications->count() > 0)
                     <div class="flex items-center justify-between py-4 px-4">
                       <h3 class="text-sm font-Inter font-medium text-slate-700 dark:text-white">Notifications</h3>
                       <a class="text-xs font-Inter font-normal underline text-slate-500 dark:text-white" href="{{ route('markAllAsRead') }}">Mark as Read</a>
@@ -113,6 +124,8 @@
                   @endforeach
                   </div>
                 </div>
+                <!-- END: Notification Dropdown -->
+                <!-- END: Notification Dropdown -->
 
                 <!-- BEGIN: Profile Dropdown -->
                 <!-- Profile DropDown Area -->
@@ -122,7 +135,7 @@
                     <div class="lg:h-8 lg:w-8 h-7 w-7 rounded-full flex-1 ltr:mr-[10px] rtl:ml-[10px]">
                       <img src="{{asset('dashboard/assets/images/all-img/user.png')}}" alt="user" class="block w-full h-full object-cover rounded-full">
                     </div>
-                    <span class="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap">{{auth()->user()->name}}</span>
+                    <span class="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap">Albert Flores</span>
                     <svg class="w-[16px] h-[16px] dark:text-white hidden lg:inline-block text-base inline-block ml-[10px] rtl:mr-[10px]" aria-hidden="true" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
@@ -131,8 +144,9 @@
                   <div class="dropdown-menu z-10 hidden bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md
       overflow-hidden">
                     <ul class="py-1 text-sm text-slate-800 dark:text-slate-200">
-                  <li>
-                        <a href="{{route('manager.logout')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+                    
+                      <li>
+                        <a href="{{route('technician.logout')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
             dark:text-white font-normal">
                           <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
                           <span class="font-Inter">Logout</span>
@@ -181,46 +195,74 @@
                         <div class="card-body flex flex-col p-6">
                             <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
                                 <div class="flex-1">
-                                    <div class="card-title text-slate-900 dark:text-white"><span style="color:green">Upate Assign Technician</span>(<b style="color:blue">Old Technician:</b> <b style="color:red">{{$assigned_task->technician->name ?? 'Not assigned'}}</b>|<b style="color:blue"> Old Service:</b> <b style="color:red">{{$assigned_task->service->name ?? 'Not assigned'}}</b>)</div>
+                                    <div class="card-title text-slate-900 dark:text-white">Edit Payment</div>
                                 </div>
                             </header>
                             <div class="card-text h-full ">
-                                <form class="space-y-4" method="post" action="{{route('manager.updateAssignedCheckinsTask')}}">
+                                <form class="space-y-4" method="post" action="{{route('technician.editPayment')}}">
                                     @csrf
-                                    <div class="input-area">
-                                      <input type="hidden" name="id" value="{{$assigned_task->id}}">
-                                  </div>  
-                                    <div class="input-area">
-                                      <label for="technician" class="form-label">Technician</label>
-                                      <select id="technician" name="technician_id" class="form-control">
-                                       
-                                      @foreach($technicians as $technician)
-                                      <option value="{{$technician->id}}" class="dark:bg-slate-700">{{$technician->name}}</option>
-                                      @endforeach
-                                      
-                                      </select>
-
-                                      @error('technician_id')
-                                          <span class="text-red-500 text-sm">{{ $message }}</span>
-                                      @enderror
-                                  </div>          
-
-                                       
-                                  <!-- <div class="input-area">
-                                      <label for="service" class="form-label">Service</label>
-                                      <select id="service" name="service_id" class="form-control">
-                                       @foreach($services as $service)
+                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                                    
+                                    
+                                 <input type="hidden" value="{{$transaction->client_check_in_id}}" name="client_check_in_id"> 
+                                <div class="input-area relative">
+                                          <label for="readonly" class="form-label">Client Name</label>
+                                          <input id="readonly" type="text" class="form-control" placeholder="{{$transaction->client->first_name}}" readonly="readonly">
+                                 </div>
+                                 <div class="input-area">
+                                      <label for="services" class="form-label">Service</label>
+                                      <select id="services" name="service_id" class="form-control">
+                                      @foreach($services as $service)
                                       <option value="{{$service->id}}" class="dark:bg-slate-700">{{$service->name}}</option>
-                                      @endforeach                                      
+                                      @endforeach                              
                                       </select>
 
                                       @error('service_id')
                                           <span class="text-red-500 text-sm">{{ $message }}</span>
                                       @enderror
-                                  </div> -->
+                                  </div>  
+                                 
+                                 <div class="input-area">
+                                      <label for="payment_method" class="form-label">Payment Method</label>
+                                      <select id="payment_method" name="payment_method" class="form-control">
+                                      <option value="cash" class="dark:bg-slate-700">Cash</option>
+                                      <option value="debit" class="dark:bg-slate-700">Card</option> 
+                                                                            
+                                      </select>
 
-                                    <!-- </div> -->
-                                    <button type="submit" class="btn inline-flex justify-center btn-dark">Update</button>
+                                      @error('payment_method')
+                                          <span class="text-red-500 text-sm">{{ $message }}</span>
+                                      @enderror
+                                  </div>  
+
+                                 <div class="input-area relative">
+                                            <label for="amount" class="form-label">Amount</label>
+                                            <input type="text" name="amount" class="form-control @error('amount') border-red-500 @enderror" placeholder="Service Amount" value="{{ old('amount',$transaction->payment->payment_amount)}}">
+                                            @error('amount')
+                                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                 <div class="input-area relative">
+                                            <label for="tips" class="form-label">Tips</label>
+                                            <input type="text" name="tips" class="form-control @error('tips') border-red-500 @enderror" placeholder="your tips" value="{{ old('tips',$transaction->payment->tips)}}">
+                                            @error('tips')
+                                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                            @enderror
+                                  </div>
+
+                                 <div class="input-area relative">
+                                  <label for="description" class="form-label">Note</label>
+                                  <textarea id="description" name="note" rows="5" class="form-control" placeholder="Type Here your Note">{{$transaction->transaction_details[0]->Note}}</textarea>
+                                  @error('note')
+                                                <span class="text-red-500 text-sm">{{ $message }}</span>
+                                  @enderror
+                                </div>
+                                    
+                                       
+                                        
+                                        
+                                    </div>
+                                    <button type="submit" class="btn inline-flex justify-center btn-dark">Proceed</button>
                                 </form>
                             </div>
                         </div>
@@ -246,29 +288,5 @@
   
   <!-- scripts -->
 @include('dashboard.includes.footer')
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-
-<script>
-
-// Enable pusher logging - don't include this in production
-
-
-var pusher = new Pusher('2080c6dc08df5ed47ee1', {
-  cluster: 'mt1'
-});
-
-var audio = new Audio("{{asset('dashboard/assets/notification/notify.mp3')}}");
-
-var channel = pusher.subscribe('notify-channel-{{auth()->user()->id}}');
-channel.bind('notify-event-{{auth()->user()->id}}', function(data) {
-  audio.currentTime = 0;
-
-  // Play the audio
-  audio.play();
-
-            // Display notification using Toastr
-  toastr.success(data.message, 'Notification');
-});
-</script>
 </body>
 </html>
