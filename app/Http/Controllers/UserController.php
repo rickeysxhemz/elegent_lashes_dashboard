@@ -30,9 +30,8 @@ class UserController extends Controller
         
         $validated = $request->only(['phone']);
         $request->validate([
-            'phone' => 'required|numeric|digits:10|min:10',
+            'phone' => 'required|min:14|max:14',
         ]);
-
         $client = Client::where('phone', $request->phone)->first();
         $manager = LocationUser::with('location','manager')->where('user_id', auth()->user()->id)->first();
         

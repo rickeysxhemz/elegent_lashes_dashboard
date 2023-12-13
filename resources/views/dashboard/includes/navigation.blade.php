@@ -92,14 +92,14 @@
               </span>
             </a>
           </li>
-          <!-- <li>
-            <a href="{{route('owner.technicianPayment')}}" class="navItem">
+          <li>
+            <a href="{{route('track.checkin')}}" class="navItem">
               <span class="flex items-center">
             <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
-            <span>Technician Payroll</span>
+            <span>Track Checkins</span>
               </span>
             </a>
-          </li> -->
+          </li>
           <li class="sidebar-menu-title">Waivers</li>
           <li>
             <a href="{{route('owner.listWaivers')}}" class="navItem">
@@ -159,6 +159,14 @@
               </span>
             </a>
           </li>
+          <li>
+            <a href="{{route('track.checkin')}}" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
+            <span>Track Checkins</span>
+              </span>
+            </a>
+          </li>
           <li class="sidebar-menu-title">Others</li>
           <li>
             <a href="{{route('notifications.manager')}}" class="navItem">
@@ -195,6 +203,15 @@
             <iconify-icon class=" nav-icon" icon="heroicons-outline:home"></iconify-icon>
             <span>Today Payments</span>
               </span>     
+            </a>
+          </li>
+          <li class="sidebar-menu-title">Checkins</li>
+          <li>
+            <a href="{{route('track.checkin')}}" class="navItem">
+              <span class="flex items-center">
+            <iconify-icon class="nav-icon" icon="mingcute:dots-vertical-line"></iconify-icon>
+            <span>Track Checkins</span>
+              </span>
             </a>
           </li>
           <li class="sidebar-menu-title">Others</li>

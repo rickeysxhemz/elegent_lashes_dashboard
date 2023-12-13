@@ -19,7 +19,7 @@
                 @csrf    
                 <div class="form-group">
                     <input class="update-location form-control @error('phone') is-invalid @enderror" 
-                        name="phone" style="color: black;" placeholder="Phone # (123456789)" required>
+                        id="phone" name="phone" style="color: black;" placeholder="Phone # (123456789)" required>
                     @error('phone')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -35,8 +35,27 @@
     </div>
 
 </section>
-    
-  
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var phoneInput = document.getElementById('phone');
+
+        phoneInput.addEventListener('input', function () {
+            var inputValue = phoneInput.value.replace(/\D/g, ''); // Remove non-numeric characters
+
+            // Ensure a maximum length of 10 digits
+            inputValue = inputValue.slice(0, 10);
+
+            // Format the phone number with exact digits
+            if (inputValue.length === 10) {
+                inputValue = '(' + inputValue.substring(0, 3) + ') ' + inputValue.substring(3, 6) + '-' + inputValue.substring(6);
+            }
+
+            phoneInput.value = inputValue;
+        });
+    });
+</script>
+
+
     <script>
 
         $(function() {

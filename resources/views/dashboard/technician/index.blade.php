@@ -320,6 +320,9 @@
                                         Client
                                       </th>
                                       <th scope="col" class=" table-th ">
+                                        LAST CHECKIN
+                                      </th>
+                                      <th scope="col" class=" table-th ">
                                         STATUS
                                       </th>
 
@@ -355,7 +358,8 @@
                                             </h4>
                                           </div>
                                         </div>
-                                      </td>
+                                    </td>
+                                    <td class="table-td"></td>
                                       <td class="table-td ">
                                         <span class="block min-w-[140px] text-left">
                                     <span class="inline-block text-center mx-auto py-1">

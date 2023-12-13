@@ -27,19 +27,5 @@ class OwnerPaymentController extends Controller
         return $this->ownerPaymentService->revenueCalculate($request);
     }
 
-    public function technicianPayment()
-    {
-        return $this->ownerPaymentService->technicianPayment();
-    }
-
-    public function technicianRevenueCalculate(Request $request)
-    {
-        $request->validate([
-            'technician_id' => 'required|exists:users,id',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-        ]);
-
-        return $this->ownerPaymentService->technicianRevenueCalculate($request);
-    }
+  
 }

@@ -93,6 +93,7 @@
                   <div class="dropdown-menu z-10 hidden bg-white divide-y divide-slate-100 shadow w-44 dark:bg-slate-800 border dark:border-slate-700 !top-[23px] rounded-md
                        overflow-hidden">
                     <ul class="py-1 text-sm text-slate-800 dark:text-slate-200">
+                   @if(auth()->user()->hasRole('owner'))
                     <li>
                         <a href="{{route('owner.changePasswordPage')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
                                    dark:text-white font-normal">
@@ -107,6 +108,25 @@
                           <span class="font-Inter">Logout</span>
                         </a>
                       </li>
+                      @endif
+                      @if(auth()->user()->hasRole('manager'))
+                      <li>
+                         <a href="{{route('manager.logout')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+                          dark:text-white font-normal">
+                          <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
+                          <span class="font-Inter">Logout</span>
+                        </a>
+                      </li>
+                      @endif
+                      @if(auth()->user()->hasRole('technician'))
+                      <li>
+                         <a href="{{route('technician.logout')}}" class="block px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 dark:hover:text-white font-inter text-sm text-slate-600
+                          dark:text-white font-normal">
+                          <iconify-icon icon="heroicons-outline:login" class="relative top-[2px] text-lg ltr:mr-1 rtl:ml-1"></iconify-icon>
+                          <span class="font-Inter">Logout</span>
+                        </a>
+                      </li>
+                      @endif
                     </ul>
                   </div>
                 </div>
@@ -145,100 +165,11 @@
               <div id="content_layout">
 
                 <div class="space-y-5">
-                   <div class="card xl:col-span-2 rounded-md bg-white dark:bg-slate-800 lg:h-full shadow-base">
-                      <div class="card-body p-6">
+                
 
-                          <div class="card">
-                              <div class="card-body">
-                                <div class="card-text h-full">
-                                @if(isset($totals))
-                                <header class="border-b px-4 pt-4 pb-3 flex items-center border-success-500">
-                                    <iconify-icon class="text-3xl inline-block ltr:mr-2 rtl:ml-2 text-success-500" icon="ph:circle-wavy-check"></iconify-icon>
-                                    <h3 class="card-title mb-0 text-success-500">
-                                    Total:&nbsp{{$totals['payment_total']}}&nbsp Tips:&nbsp{{$totals['tips']}} &nbsp Service Payment {{$totals['payment_total'] - $totals['tips']}}
-                                    </h3>
-                                  </header>
-                              
-                                  <div class="py-3 px-5">
-                                    <h5 class="card-subtitle">Total Earning</h5>
-                                    <p class="card-text mt-3">You can calculated your sum of earning using Start Date and End Date</p>
-                                  </div>
-                                  @endif
-                                </div>
-                              </div>
-                            </div>
-
-                       <div class="card-text h-full ">
-                                <form class="space-y-4" method="post" action="{{ route('owner.technicianRevenueCalculate') }}">
-                                    @csrf
-                                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
-                                        
-                                    <div class="input-area">
-                                      <label for="technician" class="form-label">Select Technician</label>
-                                      <select id="technician" name="technician_id" class="form-control">
-                                         @foreach($technicians as $technician)
-                                      <option value="{{$technician->id}}" class="dark:bg-slate-700">{{$technician->name}}</option>
-                                        @endforeach
-                                      </select>
-
-                                      @error('technician')
-                                          <span class="text-red-500 text-sm">{{ $message }}</span>
-                                      @enderror
-                                  </div>
-                                        
-                                        <div>
-                                          <label for="humanFriendly_picker" class="form-label">Start-Date</label>
-                                          <input class="form-control @error('start_date') border-red-500 @enderror py-2 flatpickr flatpickr-input active" id="start_date_picker" name="start_date" type="text" readonly="readonly">
-                                          @error('start_date')
-                                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                                            
-                                          <div>
-                                            <label for="humanFriendly_picker" class="form-label">End Date</label>
-                                            <input class="form-control @error('end_date') border-red-500 @enderror py-2 flatpickr flatpickr-input active" id="end_date_picker" name="end_date" type="text" readonly="readonly">
-                                            @error('end_date')
-                                                <span class="text-red-500 text-sm">{{ $message }}</span>
-                                            @enderror
-                                         
-                                          </div>
-                                                          
-                                      
-                                       
-                                        
-                                    </div>
-                                    <button type="submit" class="btn inline-flex justify-center btn-dark">Calculate</button>
-                                </form>
-                                
-                            </div>
-
-                  
-
-                    </div>
-                  </div>
-                <!-- </div> -->
-              </div>
-            </div>
-          <!-- </div> -->
-        </div>
-       <!-- </div> -->
-
-<!-- 
-        <div class="content-wrapper transition-all duration-150 ltr:ml-[248px] rtl:mr-[248px]" id="content_wrapper">
-          <div class="page-content">
-            <div class="transition-all duration-150 container-fluid" id="page_layout">
-              <div id="content_layout"> -->
-
-
-
-
-               
-
-                <!-- <div class=" space-y-5"> -->
-                  
-                  <div class="card">
+                <div class="card">
                     <header class=" card-header noborder">
-                      <h4 class="card-title">Technician Payments
+                      <h4 class="card-title">Track CheckIns
                       </h4>
                     </header>
                     <div class="card-body px-6 pb-6">
@@ -256,80 +187,37 @@
                                   </th>
 
                                   <th scope="col" class=" table-th ">
-                                    Technician
+                                    Client First Name
                                   </th>
                                   <th scope="col" class=" table-th ">
-                                    Service
+                                    Client Last Name
                                   </th>
+                                 
                                   <th scope="col" class=" table-th ">
-                                   Tips
-                                  </th>
-                                  <th scope="col" class=" table-th ">
-                                    Payment
+                                    Last check in
                                   </th>
 
-                                  <th scope="col" class=" table-th ">
-                                    Total
-                                  </th>
                                 
-                                  
-                                  <th scope="col" class=" table-th ">
-                                   Payment Method
-                                  </th>
-
-                                  <th scope="col" class=" table-th ">
-                                  Payment Date
-                                  </th>
-
-                                 
-
-                                 
 
                                   
 
                                 </tr>
                               </thead>
-                              <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
+                              @foreach($tracks as $track)
+                                  <tr>
+                                      <td class="table-td">{{ $loop->iteration }}</td>
+                                      <td class="table-td">{{ $track['first_name'] }}</td>
+                                      <td class="table-td">{{ $track['last_name'] }}</td>
+                                      @if(!is_null($track['latest_check_in']) && is_array($track['latest_check_in']))
+                                          <td class="table-td">{{ \Carbon\Carbon::parse($track['latest_check_in']['created_at'])->diffForHumans() }}</td>
+                                      @else
+                                          <td class="table-td">No check-ins</td>
+                                      @endif
+                                  </tr>
+                              @endforeach
 
-                              @foreach($transactions as $transaction)
-                               
-                              <tr>
-                                  <td class="table-td">{{ $loop->iteration }}</td>
-                                  <td class="table-td ">{{$transaction->technician->name}}&nbsp;({{$transaction->location->name}})</td>
-                                  <td class="table-td ">
-                                    <div>
-                                    {{$transaction->service->name}}
-                                    </div>
-                                  </td>
-                                  <td class="table-td">{{ $transaction->payment->tips }}</td>
-                                  <td class="table-td ">${{$transaction->payment->payment_amount}}</td>
-                                
-                                  <td class="table-td ">
-                                    <div>
-                                    ${{$transaction->payment->payment_total}}
-                                    </div>
-                                  </td>
-                                @if($transaction->payment->payment_method == 'debit')
-                                  <td class="table-td ">
-                                    Card
-                                  </td>
-                                @else
-                                  <td class="table-td ">
-                                    Cash
-                                  </td>
-                                @endif
-                                  <td class="table-td ">
 
-                                  <div class="inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-success-500
-                                  bg-success-500">
-                                  {{$transaction->created_at->format('F j, Y g:i A')}}
-                                  </div>
 
-                                  </td>
-                                </tr>
-
-                         @endforeach
-                               
 
                               </tbody>
                             </table>
@@ -338,12 +226,15 @@
                       </div>
                     </div>
                   </div>
-                <!-- </div> -->
-<!-- 
+
+
+                  </div>
+               
               </div>
             </div>
-          </div>
-        </div> -->
+        
+        </div>
+     
       </div>
   
   </div>

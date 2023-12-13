@@ -24,7 +24,7 @@ class UserRegisterRequest extends FormRequest
         return [
             'first_name' => 'bail|required|string|max:255',
             'last_name'  => 'bail|required|string|max:255',
-            'phone'      => 'bail|required|string|max:10|min:10|unique:clients',
+            'phone'      => 'bail|required|string|max:14|min:14|unique:clients',
         ];
     }
 }

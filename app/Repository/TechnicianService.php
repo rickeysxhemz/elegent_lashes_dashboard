@@ -37,15 +37,27 @@ class TechnicianService{
         $technician_assigned_tasks = ClientCheckInTechnician::with('clientCheckIn.client_detail','manager')
         ->where('technician_id',Auth::user()->id)
         ->orderBy('created_at','desc')
-        // ->orderByRaw("CASE WHEN status = 'pending' THEN 0 ELSE 1 END, status")
         ->paginate(10);
+       
+   
+        // dd($technician_assigned_tasks);
        $last_apointment = ClientCheckInTechnician::where('status','completed')
                           ->orderBy('created_at','desc')->pluck('created_at')->first();
       
+
+        $checkIn = ClientCheckIn::where('client_id', Auth::user()->id)
+                                ->whereHas('client_technician', function ($query) {
+                                    $query->where('status', 'completed')
+                                        ->latest('updated_at')
+                                        ->limit(1);
+                                })
+                                ->orderBy('created_at', 'desc')
+                                ->first();
+       
         return view('dashboard.technician.index',compact('technician_assigned_tasks',
                                                         'total_assigned_tasks'
                                                         ,'total_completed_tasks',
-                                                        'total_tips',
+                                                         'total_tips',
                                                         'total_payment',
                                                         'notifications_count',
                                                         'last_apointment'
@@ -116,7 +128,7 @@ class TechnicianService{
             'payment_method' => 'required',
             'tips' => 'max:255',
             'service_id' => 'required|exists:services,id',
-            'note' => 'required',
+            // 'note' => 'required',
         ]);
         
         try{
@@ -206,7 +218,7 @@ class TechnicianService{
             'amount' => 'required',
             'payment_method' => 'required',
             'tips' => 'max:255',
-            'note' => 'max:255',
+            // 'note' => 'max:255',
             'service_id' => 'required|exists:services,id',
         ]);
     
