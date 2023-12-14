@@ -13,7 +13,7 @@
         <div class="max-w-[520px] pt-20 ltr:pl-20 rtl:pr-20">
          
           <h4>
-            Elegent Lashes
+            Elegant Lashes
             <span class="text-slate-800 dark:text-slate-400 font-bold">
                             By Katie
                         </span>
@@ -70,7 +70,7 @@
             
           </div>
           <div class="auth-footer text-center">
-            Copyright 2023, Elegent Lashes by Katie All Rights Reserved.
+            Copyright 2023, Elegant Lashes by Katie All Rights Reserved.
           </div>
         </div>
       </div>

@@ -10,9 +10,9 @@
        <div id="bodyOverlay" class="w-screen h-screen fixed top-0 bg-slate-900 bg-opacity-50 backdrop-blur-sm z-10 hidden"></div>
      
        <div class="logo-segment">
-        <a class="flex items-center" href="index.html">
+        <a class="flex items-center" href="">
           
-          <span class="ltr:ml-3 rtl:mr-3 text-xl font-Inter font-bold text-slate-900 dark:text-white">Elegent Lashes</span>
+          <span class="ltr:ml-3 rtl:mr-3 text-xl font-Inter font-bold text-slate-900 dark:text-white">Elegant Lashes By Katie</span>
         </a>
         <!-- Sidebar Type Button -->
         <div id="sidebar_type" class="cursor-pointer text-slate-900 dark:text-white text-lg">
@@ -136,7 +136,7 @@
             <div class="text-center ltr:md:text-start rtl:md:text-right text-sm">
               COPYRIGHT ©
               <span id="thisYear"></span>
-              Elegent Lashes By Katie, All rights Reserved
+              Elegant Lashes By Katie, All rights Reserved
             </div>
             <div class="ltr:md:text-right rtl:md:text-end text-center text-sm">
               Designed with &hearts; by
