@@ -186,10 +186,22 @@
                               <span class="block mb-6 text-sm text-slate-900 dark:text-white font-medium">
                                   Payment Amount
                               </span>
+                             
+                            @if(isset($totals['debit_payment_total']) && isset($totals['cash_payment_total']))
                               <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium mb-6">
-                                  ${{$totals['payment_amount']}}
+                                  Cash:&nbsp;${{$totals['cash_payment_total']}}
                               </span>
-                            
+                              <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium mb-6">
+                                  Card:&nbsp;${{$totals['debit_payment_total']}}
+                              </span>
+                              <hr class="my-2">
+                              @endif
+                             
+                              @if(isset($totals['payment_amount']))
+                              <span class="block mb- text-2xl text-slate-900 dark:text-white font-medium mb-6">
+                              Total:&nbsp;${{$totals['payment_amount']}}
+                              </span>
+                              @endif
                             </div>
 
                             <div class="bg-primary-500 rounded-md p-4 bg-opacity-[0.15] dark:bg-opacity-25 relative z-[1]">
@@ -271,7 +283,7 @@
                                        
                                         
                                     </div>
-                                    <button type="submit" class="btn inline-flex justify-center btn-success">Calculate By Payment Type</button>
+                                    <button type="submit" class="btn inline-flex justify-center btn-success">Calculate By Payment Method</button>
                                 </form>
                                 
                     </div>
@@ -313,7 +325,7 @@
                                        
                                         
                                     </div>
-                                    <button type="submit" class="btn inline-flex justify-center btn-primary">Calculated By Location</button>
+                                    <button type="submit" class="btn inline-flex justify-center btn-primary">Calculate By Location</button>
                                 </form>
                                 
                   </div>
@@ -357,7 +369,7 @@
                                        
                                         
                                     </div>
-                                    <button type="submit" class="btn inline-flex justify-center btn-dark">Calculate</button>
+                                    <button type="submit" class="btn inline-flex justify-center btn-dark">Calculate By Technician</button>
                                 </form>
                                 
                             </div>

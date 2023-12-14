@@ -42,12 +42,18 @@ class OwnerPaymentService{
         ->with('payments')
         ->get()
         ->reduce(function ($carry, $transaction) {
-            $carry['payment_amount'] += $transaction->payments->sum('payment_amount');
+            $debitAmount = $transaction->payments->where('payment_method', 'debit')->sum('payment_amount');
+            $cashAmount = $transaction->payments->where('payment_method', 'cash')->sum('payment_amount');
+    
+            $carry['payment_amount'] += $debitAmount + $cashAmount;
+            $carry['debit_payment_total'] += $debitAmount;
+            $carry['cash_payment_total'] += $cashAmount;
             $carry['tips'] += $transaction->payments->sum('tips');
             $carry['payment_total'] += $transaction->payments->sum('payment_total');
             return $carry;
-        }, ['payment_amount'=>0,'tips' => 0, 'payment_total' => 0]);
-        
+        }, ['payment_amount' => 0, 'debit_payment_total' => 0, 'cash_payment_total' => 0, 'tips' => 0, 'payment_total' => 0]);
+    
+       
         $transactions = Transaction::where('location_id', $request->location_id)
                         ->whereBetween('created_at', [$request->start_date, $request->end_date])
                         ->with('transaction_details','technician','payment','client','location','service')
@@ -77,23 +83,30 @@ class OwnerPaymentService{
                 })
                 ->orderBy('created_at', 'desc')
                 ->get();
-                                        // dd($transactions);
+
                 
             return view('dashboard.owner.revenue-calculator',compact('totals','transactions','locations','technicians'))->with('message', 'Revenue calculated successfully');   
         }
        if($request->technician_id)
        {
-        $totals = Transaction::where('technician_id',$request->technician_id)
-        ->whereBetween('created_at', [$request->start_date, $request->end_date]) // Assuming start_date and end_date are provided in the request
+       
+        $totals = Transaction::where('technician_id', $request->technician_id)
+        ->whereBetween('created_at', [$request->start_date, $request->end_date])
         ->with('payments')
         ->get()
         ->reduce(function ($carry, $transaction) {
-            $carry['payment_amount'] += $transaction->payments->sum('payment_amount');
+            $debitAmount = $transaction->payments->where('payment_method', 'debit')->sum('payment_amount');
+            $cashAmount = $transaction->payments->where('payment_method', 'cash')->sum('payment_amount');
+    
+            $carry['payment_amount'] += $debitAmount + $cashAmount;
+            $carry['debit_payment_total'] += $debitAmount;
+            $carry['cash_payment_total'] += $cashAmount;
             $carry['tips'] += $transaction->payments->sum('tips');
             $carry['payment_total'] += $transaction->payments->sum('payment_total');
             return $carry;
-        }, ['payment_amount'=>0,'tips' => 0, 'payment_total' => 0]);
-        
+        }, ['payment_amount' => 0, 'debit_payment_total' => 0, 'cash_payment_total' => 0, 'tips' => 0, 'payment_total' => 0]);
+    
+     
         $transactions = Transaction::where('technician_id', $request->technician_id)
                         ->whereBetween('created_at', [$request->start_date, $request->end_date])
                         ->with('transaction_details','technician','payment','client','location','service')
